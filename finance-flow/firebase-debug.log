@@ -1,0 +1,53 @@
+[debug] [2023-06-02T01:16:28.745Z] ----------------------------------------------------------------------
+[debug] [2023-06-02T01:16:28.747Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2023-06-02T01:16:28.748Z] CLI Version:   11.29.1
+[debug] [2023-06-02T01:16:28.748Z] Platform:      win32
+[debug] [2023-06-02T01:16:28.748Z] Node Version:  v18.3.0
+[debug] [2023-06-02T01:16:28.749Z] Time:          Thu Jun 01 2023 21:16:28 GMT-0400 (Eastern Daylight Saving Time)
+[debug] [2023-06-02T01:16:28.750Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-06-02T01:16:28.845Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-06-02T01:16:28.845Z] > authorizing via signed-in user (mthockey84@gmail.com)
+[debug] [2023-06-02T01:16:28.845Z] [iam] checking project financeflow-a293d for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-06-02T01:16:28.849Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/financeflow-a293d:testIamPermissions [none]
+[debug] [2023-06-02T01:16:28.849Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/financeflow-a293d:testIamPermissions x-goog-quota-user=projects/financeflow-a293d
+[debug] [2023-06-02T01:16:28.849Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/financeflow-a293d:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-06-02T01:16:29.226Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/financeflow-a293d:testIamPermissions 200
+[debug] [2023-06-02T01:16:29.226Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/financeflow-a293d:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-06-02T01:16:29.228Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/financeflow-a293d [none]
+[debug] [2023-06-02T01:16:29.575Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/financeflow-a293d 200
+[debug] [2023-06-02T01:16:29.576Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/financeflow-a293d {"projectId":"financeflow-a293d","projectNumber":"444662007211","displayName":"financeflow","name":"projects/financeflow-a293d","resources":{"hostingSite":"financeflow-a293d"},"state":"ACTIVE","etag":"1_32c5e6d9-a668-448d-a41a-e56ceb41f512"}
+[debug] [2023-06-02T01:16:33.862Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/financeflow-a293d/sites pageToken=&pageSize=10
+[debug] [2023-06-02T01:16:34.245Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/financeflow-a293d/sites 200
+[debug] [2023-06-02T01:16:34.245Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/financeflow-a293d/sites {"sites":[{"name":"projects/financeflow-a293d/sites/financeflow-a293d","defaultUrl":"https://financeflow-a293d.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2023-06-02T01:16:34.246Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/financeflow-a293d/sites 
+[debug] [2023-06-02T01:16:34.531Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/financeflow-a293d/sites 200
+[debug] [2023-06-02T01:16:34.531Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/financeflow-a293d/sites {"sites":[{"name":"projects/financeflow-a293d/sites/financeflow-a293d","defaultUrl":"https://financeflow-a293d.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2023-06-02T01:16:34.532Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/financeflow-a293d/webApps/-/config [none]
+[debug] [2023-06-02T01:16:34.943Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/financeflow-a293d/webApps/-/config 200
+[debug] [2023-06-02T01:16:34.943Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/financeflow-a293d/webApps/-/config {"projectId":"financeflow-a293d","appId":"1:444662007211:web:5e16ebbc7b12044467beee","storageBucket":"financeflow-a293d.appspot.com","apiKey":"AIzaSyDUd3Ts0iHUbK_RJUc4cOnhsOYXccniE8Y","authDomain":"financeflow-a293d.firebaseapp.com","messagingSenderId":"444662007211","measurementId":"G-4V2523DD7E"}
+[debug] [2023-06-02T01:20:11.987Z] ----------------------------------------------------------------------
+[debug] [2023-06-02T01:20:11.990Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2023-06-02T01:20:11.991Z] CLI Version:   11.29.1
+[debug] [2023-06-02T01:20:11.991Z] Platform:      win32
+[debug] [2023-06-02T01:20:11.991Z] Node Version:  v18.3.0
+[debug] [2023-06-02T01:20:11.992Z] Time:          Thu Jun 01 2023 21:20:11 GMT-0400 (Eastern Daylight Saving Time)
+[debug] [2023-06-02T01:20:11.992Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-06-02T01:20:12.087Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-06-02T01:20:12.087Z] > authorizing via signed-in user (mthockey84@gmail.com)
+[debug] [2023-06-02T01:20:12.087Z] [iam] checking project financeflow-a293d for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-06-02T01:20:12.091Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/financeflow-a293d:testIamPermissions [none]
+[debug] [2023-06-02T01:20:12.091Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/financeflow-a293d:testIamPermissions x-goog-quota-user=projects/financeflow-a293d
+[debug] [2023-06-02T01:20:12.091Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/financeflow-a293d:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-06-02T01:20:12.490Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/financeflow-a293d:testIamPermissions 200
+[debug] [2023-06-02T01:20:12.490Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/financeflow-a293d:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-06-02T01:20:12.492Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/financeflow-a293d [none]
+[debug] [2023-06-02T01:20:12.837Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/financeflow-a293d 200
+[debug] [2023-06-02T01:20:12.837Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/financeflow-a293d {"projectId":"financeflow-a293d","projectNumber":"444662007211","displayName":"financeflow","name":"projects/financeflow-a293d","resources":{"hostingSite":"financeflow-a293d"},"state":"ACTIVE","etag":"1_e7a29d69-2a61-46bc-9523-979e8f18a8ae"}
+[debug] [2023-06-02T01:20:17.257Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/financeflow-a293d/sites pageToken=&pageSize=10
+[debug] [2023-06-02T01:20:17.656Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/financeflow-a293d/sites 200
+[debug] [2023-06-02T01:20:17.656Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/financeflow-a293d/sites {"sites":[{"name":"projects/financeflow-a293d/sites/financeflow-a293d","defaultUrl":"https://financeflow-a293d.web.app","appId":"1:444662007211:web:5e16ebbc7b12044467beee","type":"DEFAULT_SITE"}]}
+[debug] [2023-06-02T01:20:17.657Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:444662007211:web:5e16ebbc7b12044467beee/config [none]
+[debug] [2023-06-02T01:20:18.352Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:444662007211:web:5e16ebbc7b12044467beee/config 200
+[debug] [2023-06-02T01:20:18.352Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:444662007211:web:5e16ebbc7b12044467beee/config {"projectId":"financeflow-a293d","appId":"1:444662007211:web:5e16ebbc7b12044467beee","storageBucket":"financeflow-a293d.appspot.com","apiKey":"AIzaSyDUd3Ts0iHUbK_RJUc4cOnhsOYXccniE8Y","authDomain":"financeflow-a293d.firebaseapp.com","messagingSenderId":"444662007211","measurementId":"G-4V2523DD7E"}
