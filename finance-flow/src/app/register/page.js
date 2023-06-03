@@ -39,7 +39,7 @@ export default function Register() {
           <h2>Email</h2>
           <input onChange={handleEmailChange} className="px-3 mt-3 w-full h-12 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500" type="text" placeholder="Email" />
 
-          <h2 className="mt-5">Password</h2>
+          <h2 className="mt-5">Create password</h2>
           <input onChange={handlePasswordChange} className="px-3 mt-3 w-full h-12 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500" type="password" placeholder="Password" />
           <a className="text-blue-500 mt-3 text-sm self-end" href="/">Login</a>
           <button className="w-full h-10 rounded-md bg-gray-300 text-white mt-5 hover:bg-blue-500 ease-in-out duration-200" type="submit">Register</button>

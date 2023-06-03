@@ -1,11 +1,13 @@
 'use client';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { auth } from '/firebase-config';
 
 export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -20,6 +22,7 @@ export default function Home() {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       console.log('Logged in successfully!');
+      router.push('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
     }
