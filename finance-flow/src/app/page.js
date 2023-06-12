@@ -24,6 +24,7 @@ export default function Home() {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       console.log('Logged in successfully!');
+      router.push('/dashboard');
       setLoggedIn(true);
     } catch (error) {
       console.error('Login error:', error);
@@ -88,7 +89,7 @@ export default function Home() {
           <button className="w-full h-10 rounded-md bg-gray-300 text-white mt-5 hover:bg-blue-500 ease-in-out duration-200" type="submit">Login</button>
         </form>
         <button className="w-3/4 h-10 rounded-md bg-gray-300 text-white mt-5 hover:bg-blue-500 ease-in-out duration-200">Sign in with Google</button>
-        {loggedIn && generatePlaidLinkToken()}
+        {/* {loggedIn && generatePlaidLinkToken()} */}
       </div>
     </div>
   );
