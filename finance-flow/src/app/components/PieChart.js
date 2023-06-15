@@ -1,13 +1,18 @@
 'use client';
+import { Chart } from 'chart.js/auto';
 import { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
 
-const PieChart = ({ data }) => {
+export default function PieChart({ data }) {
   const chartRef = useRef(null);
+  const chartInstance = useRef(null);
 
   useEffect(() => {
+    if (chartInstance.current) {
+      chartInstance.current.destroy();
+    }
+
     const ctx = chartRef.current.getContext('2d');
-    new Chart(ctx, {
+    chartInstance.current = new Chart(ctx, {
       type: 'pie',
       data: {
         labels: data.labels,
@@ -18,10 +23,22 @@ const PieChart = ({ data }) => {
           },
         ],
       },
+      options: {
+        plugins: {
+          legend: {
+            display: false, // Hide the legend
+          },
+          tooltip: {
+            enabled: false, // Disable tooltips
+          },
+        },
+      },
     });
+
+    return () => {
+      chartInstance.current.destroy();
+    };
   }, [data]);
 
   return <canvas ref={chartRef} />;
-};
-
-export default PieChart;
+}

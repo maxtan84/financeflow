@@ -14,9 +14,18 @@ export default function Monthly() {
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Monthly Spendings" />
             <div className="flex-grow">
-                <PieChart data={data} />
+                <Month month="January" data={data} className=""/>
             </div>
             <DashFooter className="self-end mt-auto" />
         </div>
     )
 }
+
+const Month = ({ month, data }) => {
+    return (
+        <div className="h-[10%]">
+            <h1>{month}</h1>
+            <PieChart data={data} />
+        </div>
+    )
+}   
