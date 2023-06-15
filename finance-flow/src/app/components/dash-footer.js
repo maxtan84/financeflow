@@ -1,11 +1,11 @@
 export default function DashFooter({curFocus}) {
     return (
         <div className="flex bg-green-300">
-            <DashIcon icon="./images/dashImg/enter.png" />
-            <DashIcon icon="./images/dashImg/calendar.png" />
-            <DashIcon icon="./images/dashImg/dollar-symbol.png" />
-            <DashIcon icon="./images/dashImg/budget.png" />
-            <DashIcon icon="./images/dashImg/user.png" />
+            <DashIcon icon="/images/dashImg/enter.png" />
+            <DashIcon icon="/images/dashImg/calendar.png" />
+            <DashIcon icon="/images/dashImg/dollar-symbol.png" />
+            <DashIcon icon="/images/dashImg/budget.png" />
+            <DashIcon icon="/images/dashImg/user.png" />
         </div>
     )
 }
