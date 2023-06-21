@@ -30,7 +30,7 @@ export default function Input() {
             console.error('Error adding transaction to Firebase:', error);
           });
       };
-
+      
       return (
         <div className="flex flex-col h-screen">
           <DashHeader className="self-start" title="Input New Expense" />
