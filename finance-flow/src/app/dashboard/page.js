@@ -6,7 +6,7 @@ export default function Dashboard() {
     <div className="flex flex-col h-screen">
       <DashHeader className="self-start" title="Main DashBoard" />
       <div className="flex-grow"></div> {/* content */}
-      <DashFooter className="self-end mt-auto" />
+      <DashFooter className="self-end mt-auto" curFocus={"dash"}/>
     </div>
   );
 }

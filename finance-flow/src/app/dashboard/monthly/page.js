@@ -16,7 +16,7 @@ export default function Monthly() {
             <div className="flex-grow">
                 <Month month="January" data={data} className=""/>
             </div>
-            <DashFooter className="self-end mt-auto" />
+            <DashFooter className="self-end mt-auto" curFocus={"calendar"} />
         </div>
     )
 }
