@@ -15,6 +15,7 @@ export default function Monthly() {
             <DashHeader className="self-start" title="Monthly Spendings" />
             <div className="flex-grow">
                 <Month month="January" data={data} className=""/>
+                <Month month="Febuary" data={data} className=""/>
             </div>
             <DashFooter className="self-end mt-auto" curFocus={"calendar"} />
         </div>
@@ -23,7 +24,7 @@ export default function Monthly() {
 
 const Month = ({ month, data }) => {
     return (
-        <div className="h-[10%]">
+        <div className="h-[10%] m-8">
             <h1>{month}</h1>
             <PieChart data={data} />
         </div>
