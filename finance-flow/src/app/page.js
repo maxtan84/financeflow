@@ -24,6 +24,7 @@ export default function Home() {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       console.log('Logged in successfully!');
+      localStorage.setItem('userId', auth.currentUser.uid);
       router.push('/dashboard');
       setLoggedIn(true);
     } catch (error) {

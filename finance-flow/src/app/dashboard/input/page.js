@@ -6,7 +6,7 @@ import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
 
 export default function Input() {
-
+    const userId = localStorage.getItem('userId');
     const [transaction, setTransaction] = useState({
         name: "",
         amount: "",
@@ -17,7 +17,8 @@ export default function Input() {
         e.preventDefault();
       
         const db = firebase.firestore();
-        db.collection('transactions').add(transaction)
+        db.collection('transactions')
+          .add({ ...transaction, userId: userId })
           .then(() => {
             setTransaction({
               name: '',
