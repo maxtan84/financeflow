@@ -9,19 +9,41 @@ import { useEffect } from "react"
 
 export default function Monthly() {
 
+    const getMonths = () => {
+        const today = new Date();
+        const months = [];
+        for (let i = 0; i < 12; i++) {
+          const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
+          const month = monthDate.toLocaleString("default", { month: "long" });
+          const monthNumber = monthDate.getMonth() + 1;
+          months.push({ name: month, number: monthNumber });
+        }
+        return months;
+    };
+    
+    const months = getMonths();
+
     const data = {
-        labels: ['Red', 'Blue', 'Yellow'],
-        values: [12, 19, 8],
+        labels: ['Wants', 'Needs', 'Other'],
+        values: [12, 12, 22],
         colors: ['#ff0000', '#0000ff', '#ffff00'],
     };
 
     return (
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Monthly Spendings" />
-            <div className="flex-grow flex">
-                <Month month="June" data={data} monthNumber="6" className=""/>
+            <div className="flex-grow flex flex-wrap overflow-scroll w-full">
+                {months.map((month) => (
+                    <Month
+                    key={month.number}
+                    month={month.name}
+                    data={data}
+                    monthNumber={month.number}
+                  />
+                ))}
+                {/* <Month month="June" data={data} monthNumber="6" className=""/>
                 <Month month="May" data={data} monthNumber="5" className=""/>
-                <Month month="December" data={data} monthNumber="12" className=""/>
+                <Month month="December" data={data} monthNumber="12" className=""/> */}
             </div>
             <DashFooter className="self-end mt-auto" curFocus={"calendar"} />
         </div>
@@ -59,8 +81,8 @@ const Month = ({ month, data, monthNumber}) => {
 
 
     return (
-        <div className="h-[10%] m-8">
-            <h1>{month}</h1>
+        <div className=" w-1/6 m-8 flex flex-col items-center">
+            <h1 className="">{month}</h1>
             <PieChart data={data} />
             {transactions.length > 0 ? (
             <ul>
