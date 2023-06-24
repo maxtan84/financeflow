@@ -18,36 +18,41 @@ export default function Monthly() {
     return (
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Monthly Spendings" />
-            <div className="flex-grow">
-                <Month month="January" data={data} className=""/>
+            <div className="flex-grow flex">
+                <Month month="June" data={data} monthNumber="6" className=""/>
+                <Month month="May" data={data} monthNumber="5" className=""/>
             </div>
             <DashFooter className="self-end mt-auto" curFocus={"calendar"} />
         </div>
     )
 }
 
-const Month = ({ month, data }) => {
+const Month = ({ month, data, monthNumber}) => {
 
     const userId = localStorage.getItem("userId");
     const [transactions, setTransactions] = useState([]);
 
     useEffect(() => {
         const getTransactions = () => {
-          const db = firebase.firestore();
-          db.collection('transactions')
+            const db = firebase.firestore();
+            const startDate = `2023-${monthNumber.toString().padStart(2, '0')}-01`;
+            const endDate = `2023-${monthNumber.toString().padStart(2, '0')}-31`;
+            db.collection('transactions')
             .where('userId', '==', userId)
+            .where('date', '>=', startDate)
+            .where('date', '<=', endDate)
             .get()
             .then((querySnapshot) => {
-              const data = querySnapshot.docs.map((doc) => ({
+                const data = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
-              }));
-              setTransactions(data);
+                }));
+                setTransactions(data);
             })
             .catch((error) => {
-              console.error('Error fetching transactions:', error);
+                console.error('Error fetching transactions:', error);
             });
-        };
+        }; 
         getTransactions();
     }, [userId]);
 
