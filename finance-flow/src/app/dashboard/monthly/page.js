@@ -81,7 +81,7 @@ const Month = ({ month, data, monthNumber}) => {
 
 
     return (
-        <div className=" w-1/6 m-8 flex flex-col items-center">
+        <div className="w-1/6 m-8 flex flex-col items-center">
             <h1 className="">{month}</h1>
             <PieChart data={data} />
             {transactions.length > 0 ? (
