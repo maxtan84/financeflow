@@ -3,9 +3,11 @@ import DashFooter from "@/app/components/dash-footer"
 import DashHeader from "@/app/components/dash-header"
 import PieChart from "@/app/components/PieChart"
 import { useState } from "react"
+import { useEffect } from "react"
+import Link from "next/link"
 import firebase from "firebase/compat/app"
 import 'firebase/compat/firestore'
-import { useEffect } from "react"
+
 
 export default function Monthly() {
 
@@ -41,9 +43,6 @@ export default function Monthly() {
                     monthNumber={month.number}
                   />
                 ))}
-                {/* <Month month="June" data={data} monthNumber="6" className=""/>
-                <Month month="May" data={data} monthNumber="5" className=""/>
-                <Month month="December" data={data} monthNumber="12" className=""/> */}
             </div>
             <DashFooter className="self-end mt-auto" curFocus={"calendar"} />
         </div>
@@ -79,24 +78,35 @@ const Month = ({ month, data, monthNumber}) => {
         getTransactions();
     }, [userId]);
 
-
     return (
-        <div className="w-1/6 m-8 flex flex-col items-center">
-            <h1 className="">{month}</h1>
-            <PieChart data={data} />
+        <div className="w-1/6 m-8 flex flex-col items-center cursor-pointer">
+            <Link
+                href={{
+                pathname: '/dashboard/monthly/monthDetails',
+                query: {
+                    month: month,
+                    monthNumber: monthNumber,
+                }
+                }}
+            >
+                {month}
+            </Link>
+            
+            <PieChart data={data} className=""/>
             {transactions.length > 0 ? (
-            <ul>
-            {transactions.map((transaction) => (
-                <li key={transaction.id}>
-                <p>Name: {transaction.name}</p>
-                <p>Amount: {transaction.amount}</p>
-                <p>Date: {transaction.date}</p>
-                </li>
-                ))}
-            </ul>
-            ) : (
+                <ul>
+                    {transactions.map((transaction) => (
+                    <li key={transaction.id}>
+                        <p>Name: {transaction.name}</p>
+                        <p>Amount: {transaction.amount}</p>
+                        <p>Date: {transaction.date}</p>
+                    </li>
+                    ))}
+                </ul>
+                ) : (
                 <p>No transactions found for {month}</p>
             )}
         </div>
     )
 }   
+
