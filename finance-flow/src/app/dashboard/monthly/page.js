@@ -10,11 +10,10 @@ import 'firebase/compat/firestore'
 
 
 export default function Monthly() {
-
+    const today = new Date();
+    const currentMonth = today.getMonth() + 1;
+    const currentYear = today.getFullYear();
     const getMonths = () => {
-        const today = new Date();
-        const currentMonth = today.getMonth() + 1;
-        const currentYear = today.getFullYear();
         const months = [];
       
         for (let i = 0; i < 12; i++) {
@@ -36,6 +35,8 @@ export default function Monthly() {
     };
     
     const months = getMonths();
+    const currentYearMonths = months.filter(month => month.year === currentYear);
+    const lastYearMonths = months.filter(month => month.year === currentYear - 1);
 
     const data = {
         labels: ['Wants', 'Needs', 'Other'],
@@ -47,7 +48,8 @@ export default function Monthly() {
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Monthly Spendings" />
             <div className="flex-grow flex flex-wrap overflow-scroll w-full">
-                {months.map((month) => (
+                <h2 className="relative pl-3 py-2 font-bold self-start bg-gray-300 w-full">{currentYear}</h2>
+                {currentYearMonths.map((month) => (
                     <Month
                     key={month.number}
                     month={month.name}
@@ -57,6 +59,20 @@ export default function Monthly() {
                   />
                 ))}
             </div>
+            {lastYearMonths.length > 0 && (
+            <div className="flex-grow flex flex-wrap overflow-scroll w-full">
+                <h2 className="relative pl-3 py-2 font-bold self-start bg-gray-300 w-full">{currentYear - 1}</h2>
+                {lastYearMonths.map((month) => (
+                <Month
+                    key={month.number}
+                    month={month.name}
+                    year={month.year}
+                    data={data}
+                    monthNumber={month.number}
+                />
+                ))}
+            </div>
+            )}
             <DashFooter className="self-end mt-auto" curFocus={"calendar"} />
         </div>
     )
@@ -92,7 +108,7 @@ const Month = ({ month, data, monthNumber, year}) => {
     }, [userId]);
 
     return (
-        <div className="w-1/6 m-8 flex flex-col items-center cursor-pointer">
+        <div className="w-1/6 mx-8 my-5 flex flex-col items-center cursor-pointer">
             <Link
                 href={{
                 pathname: '/dashboard/monthly/monthDetails',
