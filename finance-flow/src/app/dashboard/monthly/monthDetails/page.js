@@ -11,17 +11,16 @@ export default function MonthlyDetails({ searchParams }) {
   const userId = localStorage.getItem("userId");
   const [transactions, setTransactions] = useState([]);
 
-  console.log(searchParams.month);
-  console.log(userId);
   const month = searchParams.month;
   const monthNumber = searchParams.monthNumber;
+  const year = searchParams.year;
 
   useEffect(() => {
     if (month) {
       const getTransactions = () => {
         const db = firebase.firestore();
-        const startDate = `2023-${monthNumber.toString().padStart(2, '0')}-01`;
-        const endDate = `2023-${monthNumber.toString().padStart(2, '0')}-31`;
+        const startDate = `${year}-${monthNumber.toString().padStart(2, '0')}-01`;
+        const endDate = `${year}-${monthNumber.toString().padStart(2, '0')}-31`;
         db.collection('transactions')
           .where('userId', '==', userId)
           .where('date', '>=', startDate)

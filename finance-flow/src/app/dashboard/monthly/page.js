@@ -13,13 +13,25 @@ export default function Monthly() {
 
     const getMonths = () => {
         const today = new Date();
+        const currentMonth = today.getMonth() + 1;
+        const currentYear = today.getFullYear();
         const months = [];
+      
         for (let i = 0; i < 12; i++) {
-          const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
-          const month = monthDate.toLocaleString("default", { month: "long" });
-          const monthNumber = monthDate.getMonth() + 1;
-          months.push({ name: month, number: monthNumber });
+            let monthNumber = currentMonth - i;
+            let year = currentYear;
+            
+            if (monthNumber <= 0) {
+                monthNumber += 12;
+                year--;
+            }
+            
+            const monthDate = new Date(year, monthNumber - 1, 1);
+            const month = monthDate.toLocaleString("default", { month: "long" });
+        
+            months.push({ name: month, number: monthNumber, year: year});
         }
+      
         return months;
     };
     
@@ -39,6 +51,7 @@ export default function Monthly() {
                     <Month
                     key={month.number}
                     month={month.name}
+                    year={month.year}
                     data={data}
                     monthNumber={month.number}
                   />
@@ -49,7 +62,7 @@ export default function Monthly() {
     )
 }
 
-const Month = ({ month, data, monthNumber}) => {
+const Month = ({ month, data, monthNumber, year}) => {
 
     const userId = localStorage.getItem("userId");
     const [transactions, setTransactions] = useState([]);
@@ -57,8 +70,8 @@ const Month = ({ month, data, monthNumber}) => {
     useEffect(() => {
         const getTransactions = () => {
             const db = firebase.firestore();
-            const startDate = `2023-${monthNumber.toString().padStart(2, '0')}-01`;
-            const endDate = `2023-${monthNumber.toString().padStart(2, '0')}-31`;
+            const startDate = `${year}-${monthNumber.toString().padStart(2, '0')}-01`;
+            const endDate = `${year}-${monthNumber.toString().padStart(2, '0')}-31`;
             db.collection('transactions')
             .where('userId', '==', userId)
             .where('date', '>=', startDate)
@@ -86,26 +99,13 @@ const Month = ({ month, data, monthNumber}) => {
                 query: {
                     month: month,
                     monthNumber: monthNumber,
+                    year: year,
                 }
                 }}
             >
                 {month}
             </Link>
-            
             <PieChart data={data} className=""/>
-            {/* {transactions.length > 0 ? (
-                <ul>
-                    {transactions.map((transaction) => (
-                    <li key={transaction.id}>
-                        <p>Name: {transaction.name}</p>
-                        <p>Amount: {transaction.amount}</p>
-                        <p>Date: {transaction.date}</p>
-                    </li>
-                    ))}
-                </ul>
-                ) : (
-                <p>No transactions found for {month}</p>
-            )} */}
         </div>
     )
 }   
