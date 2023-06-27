@@ -93,7 +93,7 @@ const Month = ({ month, data, monthNumber}) => {
             </Link>
             
             <PieChart data={data} className=""/>
-            {transactions.length > 0 ? (
+            {/* {transactions.length > 0 ? (
                 <ul>
                     {transactions.map((transaction) => (
                     <li key={transaction.id}>
@@ -105,7 +105,7 @@ const Month = ({ month, data, monthNumber}) => {
                 </ul>
                 ) : (
                 <p>No transactions found for {month}</p>
-            )}
+            )} */}
         </div>
     )
 }   
