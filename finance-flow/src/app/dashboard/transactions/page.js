@@ -56,11 +56,13 @@ export default function Transactions() {
                 return { month, transactions: data };
             });
             const results = await Promise.all(transactionPromises);
-            const sortedResults = results.sort((a, b) => {
-                if (a.month.year === b.month.year) {
-                    return b.month.number - a.month.number;
-                }
-                return b.month.year - a.month.year;
+            const sortedResults = results.map((result) => {
+                const sortedTransactions = result.transactions.sort((a, b) => {
+                  const dateA = new Date(a.date);
+                  const dateB = new Date(b.date);
+                  return dateB - dateA;
+                });
+                return { ...result, transactions: sortedTransactions };
             });
             setTransactions(sortedResults);
         };
