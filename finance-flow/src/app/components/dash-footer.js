@@ -7,7 +7,7 @@ export default function DashFooter({ curFocus }) {
             <DashIcon icon="/images/dashImg/calendar.png" text="calendar" link="/dashboard/monthly" curFocus={curFocus} />
             <DashIcon icon="/images/dashImg/dollar-symbol.png" text="dash" link="/dashboard" curFocus={curFocus} />
             <DashIcon icon="/images/dashImg/budget.png" text="budget" link="/budget" curFocus={curFocus} /> 
-            <DashIcon icon="/images/dashImg/user.png" text="user" link="/user" curFocus={curFocus} />
+            <DashIcon icon="/images/dashImg/transactions.png" text="transactions" link="/dashboard/transactions" curFocus={curFocus} />
         </div>
     );
 }

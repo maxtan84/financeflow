@@ -60,7 +60,7 @@ export default function MonthlyDetails({ searchParams }) {
           <p>No transactions found for {month}</p>
         )}
       </div>
-      <DashFooter className="self-end mt-auto" curFocus={"dash"} />
+      <DashFooter className="self-end mt-auto" curFocus={"calendar"} />
     </div>
   );
 }
