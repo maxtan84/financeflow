@@ -10,6 +10,7 @@ export default function Input() {
     const [transaction, setTransaction] = useState({
         name: "",
         amount: "",
+        category: "",
         date: "",
     })
 
@@ -23,6 +24,7 @@ export default function Input() {
             setTransaction({
               name: '',
               amount: '',
+              category: '',
               date: ''
             });
             console.log('Transaction added to Firebase!');
@@ -58,6 +60,25 @@ export default function Input() {
                   onChange={(e) => setTransaction({ ...transaction, amount: e.target.value })}
                   required
                 />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="category" className="block text-gray-700 font-bold mb-4">
+                  Category:
+                </label>
+                <select
+                  id="category"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  value={transaction.category}
+                  onChange={(e) =>
+                    setTransaction({ ...transaction, category: e.target.value })
+                  }
+                  required
+                >
+                  <option value="">Select a category</option>
+                  <option value="Food">Food</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Shopping">Shopping</option>
+                </select>
               </div>
               <div className="mb-4">
                 <label htmlFor="date" className="block text-gray-700 font-bold mb-4">Date of Transaction:</label>
