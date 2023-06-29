@@ -93,12 +93,12 @@ export default function Transactions() {
 const Month = ({ month, year, transactions }) => {
     return (
         <div>
-            <h2 className="text-lg font-bold">{month} {year}</h2>
+            <h2 className="mb-1 text-lg font-bold bg-gray-300">{month} {year}</h2>
             {transactions.map((transaction) => (
-                <div key={transaction.id}>
-                    <p>Name: {transaction.name}</p>
-                    <p>Amount: {transaction.amount}</p>
-                    <p>Date: {transaction.date}</p>
+                <div key={transaction.id} className="flex">
+                    <p className="m-1 w-[40%]" >{transaction.name}</p>
+                    <p className="m-1 w-[20%]" >{transaction.amount}</p>
+                    <p className="m-1 w-[30%]" >{transaction.date}</p>
                 </div>
             ))}
         </div>
