@@ -47,7 +47,7 @@ export default function Monthly() {
     return (
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Monthly Spendings" />
-            <div className="flex-grow flex flex-wrap overflow-scroll w-full">
+            <div className="flex-grow flex flex-wrap overflow-scroll w-full justify-center">
                 <h2 className="relative pl-3 py-2 font-bold self-start bg-gray-300 w-full">{currentYear}</h2>
                 {currentYearMonths.map((month) => (
                     <Month
@@ -60,7 +60,7 @@ export default function Monthly() {
                 ))}
             </div>
             {lastYearMonths.length > 0 && (
-            <div className="flex-grow flex flex-wrap overflow-scroll w-full">
+            <div className="flex-grow flex flex-wrap overflow-scroll w-full justify-center">
                 <h2 className="relative pl-3 py-2 font-bold self-start bg-gray-300 w-full">{currentYear - 1}</h2>
                 {lastYearMonths.map((month) => (
                 <Month
@@ -108,7 +108,7 @@ const Month = ({ month, data, monthNumber, year}) => {
     }, [userId]);
 
     return (
-        <div className="w-1/6 mx-8 my-5 flex flex-col items-center cursor-pointer">
+        <div className="w-1/6 mx-6 my-5 flex flex-col items-center cursor-pointer">
             <Link
                 href={{
                 pathname: '/dashboard/monthly/monthDetails',

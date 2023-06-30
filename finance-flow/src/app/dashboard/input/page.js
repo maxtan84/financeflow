@@ -75,9 +75,15 @@ export default function Input() {
                   required
                 >
                   <option value="">Select a category</option>
-                  <option value="Food">Food</option>
-                  <option value="Transportation">Transportation</option>
+                  <option value="Dining Out">Dining Out</option>
                   <option value="Shopping">Shopping</option>
+                  <option value="Travel and Entertainment">Travel and Entertainment</option>
+                  <option value="Home">Home</option>
+                  <option value="Groceries">Groceries</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Utilities">Utilities</option>
+                  <option value="Education and Health">Education and Health</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
               <div className="mb-4">

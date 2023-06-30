@@ -44,7 +44,7 @@ export default function MonthlyDetails({ searchParams }) {
 
   return (
     <div className="flex flex-col h-screen">
-      <DashHeader className="self-start" title={`Transactions in ${month}`} />
+      <DashHeader className="self-start" title={`Analysis for ${month}`} />
       <div className="flex-grow">
         {transactions.length > 0 ? (
           <ul>
@@ -52,6 +52,7 @@ export default function MonthlyDetails({ searchParams }) {
               <li key={transaction.id}>
                 <p>Name: {transaction.name}</p>
                 <p>Amount: {transaction.amount}</p>
+                <p>Category: {transaction.category}</p>
                 <p>Date: {transaction.date}</p>
               </li>
             ))}
