@@ -87,7 +87,7 @@ export default function Budget() {
             Wants:
           </label>
           <input
-            type="text"
+            type="number"
             id="wantsBudget"
             value={wantsBudget}
             onChange={(e) => setWantsBudget(e.target.value)}
@@ -99,7 +99,7 @@ export default function Budget() {
             Needs:
           </label>
           <input
-            type="text"
+            type="number"
             id="needsBudget"
             value={needsBudget}
             onChange={(e) => setNeedsBudget(e.target.value)}
@@ -113,7 +113,7 @@ export default function Budget() {
           <input
             type="number"
             id="othersBudget"
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={othersBudget}
             onChange={(e) => setOthersBudget(parseInt(e.target.value))}
           />
