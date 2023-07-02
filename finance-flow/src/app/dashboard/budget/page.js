@@ -33,7 +33,6 @@ export default function Budget() {
       .set(budgetData)
       .then(() => {
         console.log("Budget submitted successfully!");
-        // Reset input values
         setSelectedMonth("");
         setWantsBudget(0);
         setNeedsBudget(0);
