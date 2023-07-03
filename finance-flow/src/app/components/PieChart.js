@@ -29,7 +29,7 @@ export default function PieChart({ data }) {
             display: false, // Hide the legend
           },
           tooltip: {
-            enabled: false, // Disable tooltips
+            enabled: true, // Disable tooltips
           },
         },
       },

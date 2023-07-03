@@ -38,12 +38,6 @@ export default function Monthly() {
     const currentYearMonths = months.filter(month => month.year === currentYear);
     const lastYearMonths = months.filter(month => month.year === currentYear - 1);
 
-    const data = {
-        labels: ['Wants', 'Needs', 'Other'],
-        values: [12, 12, 22],
-        colors: ['#ff0000', '#0000ff', '#ffff00'],
-    };
-
     return (
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Monthly Spendings" />
@@ -55,7 +49,6 @@ export default function Monthly() {
                         key={month.number}
                         month={month.name}
                         year={month.year}
-                        data={data}
                         monthNumber={month.number}
                     />
                     ))}
@@ -68,7 +61,6 @@ export default function Monthly() {
                         key={month.number}
                         month={month.name}
                         year={month.year}
-                        data={data}
                         monthNumber={month.number}
                     />
                     ))}
@@ -80,51 +72,89 @@ export default function Monthly() {
     )
 }
 
-const Month = ({ month, data, monthNumber, year}) => {
+const Month = ({ month, monthNumber, year }) => {
+  const userId = localStorage.getItem('userId');
+  const [transactions, setTransactions] = useState([]);
+  const [wants, setWants] = useState(0);
+  const [needs, setNeeds] = useState(0);
+  const [other, setOther] = useState(1);
 
-    const userId = localStorage.getItem("userId");
-    const [transactions, setTransactions] = useState([]);
-
-    useEffect(() => {
-        const getTransactions = () => {
-            const db = firebase.firestore();
-            const startDate = `${year}-${monthNumber.toString().padStart(2, '0')}-01`;
-            const endDate = `${year}-${monthNumber.toString().padStart(2, '0')}-31`;
-            db.collection('transactions')
-            .where('userId', '==', userId)
-            .where('date', '>=', startDate)
-            .where('date', '<=', endDate)
-            .get()
-            .then((querySnapshot) => {
-                const data = querySnapshot.docs.map((doc) => ({
+  useEffect(() => {
+    const getTransactions = () => {
+      const db = firebase.firestore();
+      const startDate = `${year}-${monthNumber.toString().padStart(2, '0')}-01`;
+      const endDate = `${year}-${monthNumber.toString().padStart(2, '0')}-31`;
+      db.collection('transactions')
+        .where('userId', '==', userId)
+        .where('date', '>=', startDate)
+        .where('date', '<=', endDate)
+        .get()
+        .then((querySnapshot) => {
+            const data = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
-                }));
-                setTransactions(data);
-            })
-            .catch((error) => {
-                console.error('Error fetching transactions:', error);
-            });
-        }; 
-        getTransactions();
-    }, [userId]);
+        }));
 
-    return (
-        <div className="w-1/6 m-6 flex flex-col items-center cursor-pointer">
-            <Link
-                href={{
-                pathname: '/dashboard/monthly/monthDetails',
-                query: {
-                    month: month,
-                    monthNumber: monthNumber,
-                    year: year,
-                }
-                }}
-            >
-                {month}
-            </Link>
-            <PieChart data={data} className=""/>
-        </div>
-    )
-}   
+        let wantsTotal = 0;
+        let needsTotal = 0;
+        let othersTotal = 0;
+
+        data.forEach((transaction) => {
+            if (transaction.category === 'Shopping' || transaction.category === 'Dining out' || transaction.category === 'Travel and Entertainment') {
+                wantsTotal += parseInt(transaction.amount);
+            }
+        });
+
+        data.forEach((transaction) => {
+            if (transaction.category === 'Home' || transaction.category === 'Groceries' || transaction.category === 'Transportation' || transaction.category === 'Utilities' || transaction.category === 'Education' || transaction.category === 'Health') {
+                needsTotal += parseInt(transaction.amount);
+            }
+        });
+
+        data.forEach((transaction) => {
+            if (transaction.category === 'Gift' || transaction.category === 'Donations and Taxes' || transaction.category === 'Other') {
+                othersTotal += parseInt(transaction.amount);
+            }
+        });
+
+        setTransactions(data);
+        setWants(wantsTotal);
+        setNeeds(needsTotal);
+        setOther(othersTotal);
+    })
+    .catch((error) => {
+        console.error('Error fetching transactions:', error);
+    });
+    };
+    getTransactions();
+  }, [userId]);
+
+  let fill = 0;
+  if (wants === 0 && needs === 0 && other === 0) {
+    fill = 1;
+  }
+  const data = {
+    labels: ['Wants', 'Needs', 'Other', 'None'],
+    values: [wants, needs, other, fill],
+    colors: ['#FF6384', '#36A2EB', '#FFCE56', '#808080'],
+  };
+
+  return (
+    <div className="w-1/6 m-6 flex flex-col items-center cursor-pointer">
+      <Link
+        href={{
+          pathname: '/dashboard/monthly/monthDetails',
+          query: {
+            month: month,
+            monthNumber: monthNumber,
+            year: year,
+          },
+        }}
+      >
+        {month}
+      </Link>
+      <PieChart data={data} className="" />
+    </div>
+  );
+};
 
