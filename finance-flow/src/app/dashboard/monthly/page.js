@@ -93,34 +93,34 @@ const Month = ({ month, monthNumber, year }) => {
             const data = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
-        }));
+      }));
 
-        let wantsTotal = 0;
-        let needsTotal = 0;
-        let othersTotal = 0;
+      let wantsTotal = 0;
+      let needsTotal = 0;
+      let othersTotal = 0;
+        
+      data.forEach((transaction) => {
+          if (transaction.category === 'Shopping' || transaction.category === 'Dining out' || transaction.category === 'Travel and Entertainment') {
+              wantsTotal += parseInt(transaction.amount);
+          }
+      });
 
-        data.forEach((transaction) => {
-            if (transaction.category === 'Shopping' || transaction.category === 'Dining out' || transaction.category === 'Travel and Entertainment') {
-                wantsTotal += parseInt(transaction.amount);
-            }
-        });
+      data.forEach((transaction) => {
+          if (transaction.category === 'Home' || transaction.category === 'Groceries' || transaction.category === 'Transportation' || transaction.category === 'Utilities' || transaction.category === 'Education' || transaction.category === 'Health') {
+              needsTotal += parseInt(transaction.amount);
+          }
+      });
 
-        data.forEach((transaction) => {
-            if (transaction.category === 'Home' || transaction.category === 'Groceries' || transaction.category === 'Transportation' || transaction.category === 'Utilities' || transaction.category === 'Education' || transaction.category === 'Health') {
-                needsTotal += parseInt(transaction.amount);
-            }
-        });
-
-        data.forEach((transaction) => {
-            if (transaction.category === 'Gift' || transaction.category === 'Donations and Taxes' || transaction.category === 'Other') {
-                othersTotal += parseInt(transaction.amount);
-            }
-        });
-
-        setTransactions(data);
-        setWants(wantsTotal);
-        setNeeds(needsTotal);
-        setOther(othersTotal);
+      data.forEach((transaction) => {
+          if (transaction.category === 'Other') {
+              othersTotal += parseInt(transaction.amount);
+          }
+      });
+        
+      setTransactions(data);
+      setWants(wantsTotal);
+      setNeeds(needsTotal);
+      setOther(othersTotal);
     })
     .catch((error) => {
         console.error('Error fetching transactions:', error);
