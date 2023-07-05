@@ -24,7 +24,7 @@ export default function MonthlyDetails({ searchParams }) {
   const categories = [
     'Shopping',
     'Dining Out',
-    'Travel and Entertainment',
+    'Travel & Entertainment',
     'Home',
     'Groceries',
     'Transportation',
@@ -95,7 +95,7 @@ export default function MonthlyDetails({ searchParams }) {
   const label = 'Spending in ' + month;
 
   const data = {
-    labels: ['Shopping', 'Dining Out', 'Travel and Entertainment', 'Home', 'Groceries', 'Transportation', 'Health and Education' ,'Other'],
+    labels: ['Shopping', 'Dining Out', 'Travel & Entertainment', 'Home', 'Groceries', 'Transportation', 'Health and Education' ,'Other'],
     datasets: [
       {
         label: label,
@@ -123,17 +123,16 @@ export default function MonthlyDetails({ searchParams }) {
         ))}
 
         {selectedCategory && (
-          <div>
-            <h3>Transactions for {selectedCategory}</h3>
+          <div className="m-2">
+            <h3 className="text-lg font-bold tracking-wide">Transactions for {selectedCategory}</h3>
             <ul>
               {transactions
                 .filter((transaction) => transaction.category === selectedCategory)
                 .map((transaction) => (
-                  <li key={transaction.id}>
-                    <p>Name: {transaction.name}</p>
-                    <p>Amount: {transaction.amount}</p>
-                    <p>Category: {transaction.category}</p>
-                    <p>Date: {transaction.date}</p>
+                  <li key={transaction.id} className="flex gap-x-2 my-1 text-sm">
+                    <p className="w-[35%]">{transaction.name}</p>
+                    <p className="w-[20%]">{transaction.amount}</p>
+                    <p className="w-[35%]">{transaction.date}</p>
                   </li>
                 ))}
             </ul>
