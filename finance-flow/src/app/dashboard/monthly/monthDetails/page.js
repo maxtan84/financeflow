@@ -1,15 +1,15 @@
 'use client'
 import DashFooter from "@/app/components/dash-footer"
 import DashHeader from "@/app/components/dash-header"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import firebase from "firebase/compat/app"
 import 'firebase/compat/firestore'
-import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import BarGraph from "@/app/components/BarGraph"
 
 export default function MonthlyDetails({ searchParams }) {
   const userId = localStorage.getItem("userId");
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [shopping, setShopping] = useState(0);
   const [diningOut, setDiningOut] = useState(0);
@@ -20,6 +20,18 @@ export default function MonthlyDetails({ searchParams }) {
   const [healthAndEducation, setHealthAndEducation] = useState(0);
   const [utilities, setUtilities] = useState(0);
   const [other, setOther] = useState(0);
+
+  const categories = [
+    'Shopping',
+    'Dining Out',
+    'Travel and Entertainment',
+    'Home',
+    'Groceries',
+    'Transportation',
+    'Health and Education',
+    'Utilities',
+    'Other',
+  ];
 
   const month = searchParams.month;
   const monthNumber = searchParams.monthNumber;
@@ -99,25 +111,51 @@ export default function MonthlyDetails({ searchParams }) {
     <div className="flex flex-col h-screen">
       <DashHeader className="self-start" title={`Analysis for ${month}`} />
       <div className="flex-grow overflow-scroll">
-        <div className="flex justify-center">
-          <BarGraph data={data} />
-        </div>
-        {transactions.length > 0 ? (
-          <ul>
-            {transactions.map((transaction) => (
-              <li key={transaction.id}>
-                <p>Name: {transaction.name}</p>
-                <p>Amount: {transaction.amount}</p>
-                <p>Category: {transaction.category}</p>
-                <p>Date: {transaction.date}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No transactions found for {month}</p>
+        <BarGraph data={data} />
+        {categories.map((category) => (
+
+          <Button
+            key={category}
+            text={category}
+            onClick={() => setSelectedCategory(category)}
+            isSelected={selectedCategory === category}
+          />
+        ))}
+
+        {selectedCategory && (
+          <div>
+            <h3>Transactions for {selectedCategory}</h3>
+            <ul>
+              {transactions
+                .filter((transaction) => transaction.category === selectedCategory)
+                .map((transaction) => (
+                  <li key={transaction.id}>
+                    <p>Name: {transaction.name}</p>
+                    <p>Amount: {transaction.amount}</p>
+                    <p>Category: {transaction.category}</p>
+                    <p>Date: {transaction.date}</p>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        )}
+        {!selectedCategory && (
+          <p>No category selected</p>
+          // put here if budget then show spending based on budget, if not then prompt user to set a budget
         )}
       </div>
+      
       <DashFooter className="self-end mt-auto" curFocus={"calendar"} />
     </div>
   );
 }
+
+const Button = ({ text, onClick, isSelected }) => (
+  <button
+    className={`bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-1 px-2 rounded m-2`}
+    onClick={onClick}
+    style={{ opacity: isSelected ? 1 : 0.5 }}
+  >
+    {text}
+  </button>
+);
