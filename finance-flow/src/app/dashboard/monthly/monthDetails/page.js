@@ -175,6 +175,7 @@ export default function MonthlyDetails({ searchParams }) {
         {!selectedCategory && (
           <div>
             <h3>{month} Summary</h3>
+            {/* put doing good, ok, bad depending on how many overbudget */}
             {overWants && <p>You are over your Wants budget by ${totalWants - wBudget}</p>}
             {!overWants && <p>You are under your Wants budget by ${wBudget - totalWants}</p>}
             {overNeeds && <p>You are over your Needs budget by ${totalNeeds - nBudget}</p>}
