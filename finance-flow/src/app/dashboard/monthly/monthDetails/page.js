@@ -21,6 +21,13 @@ export default function MonthlyDetails({ searchParams }) {
   const [utilities, setUtilities] = useState(0);
   const [other, setOther] = useState(0);
 
+  const [wBudget, setWantsBudget] = useState(0);
+  const [nBudget, setNeedsBudget] = useState(0);
+  const [oBudget, setOthersBudget] = useState(0);
+  const [totalWants, setTotalWants] = useState(0);
+  const [totalNeeds, setTotalNeeds] = useState(0);
+  const [totalOthers, setTotalOthers] = useState(0);
+
   const categories = [
     'Shopping',
     'Dining Out',
@@ -82,15 +89,37 @@ export default function MonthlyDetails({ searchParams }) {
             const otherTotal = other.reduce((total, transaction) => total + parseInt(transaction.amount), 0);
             setOther(otherTotal);
             setTransactions(data);
+            setTotalWants(shoppingTotal + diningTotal + travelTotal);
+            setTotalNeeds(groceryTotal + transportTotal + healthTotal + utilityTotal  + homeTotal);
+            setTotalOthers(otherTotal);
           })
           .catch((error) => {
             console.error('Error fetching transactions:', error);
           });
       };
 
+      const getBudget = () => {
+        const db = firebase.firestore();
+        db.collection('budgets')
+          .where('userId', '==', userId)
+          .where('month', '==', month + ' ' + year)
+          .get()
+          .then((querySnapshot) => {
+            const data = querySnapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setWantsBudget(data[0].wantsBudget);
+            setNeedsBudget(data[0].needsBudget);
+            setOthersBudget(data[0].othersBudget);
+
+          })
+      };
+
       getTransactions();
+      getBudget();
     }
-  }, [userId, month]);
+  }, []);
 
   const label = 'Spending in ' + month;
 
@@ -107,13 +136,18 @@ export default function MonthlyDetails({ searchParams }) {
     ],
   };
 
+  const overWants = totalWants - wBudget > 0 ? true : false;
+  const overNeeds = totalNeeds - nBudget > 0 ? true : false;
+  const overOthers = totalOthers - oBudget > 0 ? true : false;
+  console.log(totalWants, totalNeeds, totalOthers)
+  console.log(overWants, overNeeds, overOthers);
+
   return (
     <div className="flex flex-col h-screen">
       <DashHeader className="self-start" title={`Analysis for ${month}`} />
       <div className="flex-grow overflow-scroll">
         <BarGraph data={data} />
         {categories.map((category) => (
-
           <Button
             key={category}
             text={category}
@@ -139,8 +173,15 @@ export default function MonthlyDetails({ searchParams }) {
           </div>
         )}
         {!selectedCategory && (
-          <p>No category selected</p>
-          // put here if budget then show spending based on budget, if not then prompt user to set a budget
+          <div>
+            <h3>{month} Summary</h3>
+            {overWants && <p>You are over your Wants budget by ${totalWants - wBudget}</p>}
+            {!overWants && <p>You are under your Wants budget by ${wBudget - totalWants}</p>}
+            {overNeeds && <p>You are over your Needs budget by ${totalNeeds - nBudget}</p>}
+            {!overNeeds && <p>You are under your Needs budget by ${nBudget - totalNeeds}</p>}
+            {overOthers && <p>You are over your Others budget by ${totalOthers - oBudget}</p>}
+            {!overOthers && <p>You are under your Others budget by ${oBudget - totalOthers}</p>}
+          </div>
         )}
       </div>
       
