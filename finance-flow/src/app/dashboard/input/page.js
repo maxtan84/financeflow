@@ -37,7 +37,7 @@ export default function Input() {
       return (
         <div className="flex flex-col h-screen">
           <DashHeader className="self-start" title="Input New Expense" />
-          <div className="flex-grow m-4 text-lg flex items-center justify-center">
+          <div className="flex-grow m-4 text-lg flex justify-center overflow-scroll">
             <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 ">
               <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 font-bold mb-4">Name of Transaction:</label>

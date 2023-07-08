@@ -1,3 +1,4 @@
+'use client '
 import Link from 'next/link';
 
 export default function DashFooter({ curFocus }) {
@@ -17,9 +18,9 @@ const DashIcon = ({ icon, text, link, curFocus }) => {
     const borderStyle = isActive ? 'border-t border-black' : '';
   
     return (
-      <div className={`m-4 py-2 ${borderStyle}`}>
+      <div className={`m-4 flex-grow basis-1/12 py-2 ${borderStyle}`}>
         <Link href={link}>
-            <img src={icon} alt={text} className="cursor-pointer" />
+            <img src={icon} alt={text} className="cursor-pointer max-w-full" />
         </Link>
       </div>
     );
