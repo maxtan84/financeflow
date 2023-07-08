@@ -139,8 +139,6 @@ export default function MonthlyDetails({ searchParams }) {
   const overWants = totalWants - wBudget > 0 ? true : false;
   const overNeeds = totalNeeds - nBudget > 0 ? true : false;
   const overOthers = totalOthers - oBudget > 0 ? true : false;
-  console.log(totalWants, totalNeeds, totalOthers)
-  console.log(overWants, overNeeds, overOthers);
 
   return (
     <div className="flex flex-col h-screen">
@@ -173,11 +171,11 @@ export default function MonthlyDetails({ searchParams }) {
           </div>
         )}
         {!selectedCategory && (
-          <div>
-            <h3>{month} Summary</h3>
-            {/* put doing good, ok, bad depending on how many overbudget */}
-            {overWants && <p>You are over your Wants budget by ${totalWants - wBudget}</p>}
-            {!overWants && <p>You are under your Wants budget by ${wBudget - totalWants}</p>}
+          <div className="m-2">
+            <h3 className="font-bold underline underline-offset-2 text-xl my-2 ">{month} Summary</h3>
+            {/* pass in average of months so we can display how much they are spending based on average */}
+            {overWants && <p>You are over your Wants budget by <span className="font-bold">${totalWants - wBudget}</span></p>}
+            {!overWants && <p>You are under your Wants budget by <span>${wBudget - totalWants}</span></p>}
             {overNeeds && <p>You are over your Needs budget by ${totalNeeds - nBudget}</p>}
             {!overNeeds && <p>You are under your Needs budget by ${nBudget - totalNeeds}</p>}
             {overOthers && <p>You are over your Others budget by ${totalOthers - oBudget}</p>}
