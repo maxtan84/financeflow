@@ -9,9 +9,11 @@ export default function Transactions() {
     const userId = localStorage.getItem("userId");
     const [transactions, setTransactions] = useState([]);
     const [months, setMonths] = useState([]);
+    const [deleting, setDeleting] = useState(false);
     const today = new Date();
     const currentMonth = today.getMonth() + 1;
     const currentYear = today.getFullYear();
+    
 
     useEffect(() => {
         const getMonths = () => {
@@ -66,22 +68,25 @@ export default function Transactions() {
             });
             setTransactions(sortedResults);
         };
+        console.log(deleting)
 
         if (months.length > 0) {
             fetchTransactions();
         }
-    }, [months, userId]);
+    }, [months, userId, deleting]);
 
     return (
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Past Transactions" />
             <div className="flex-grow overflow-scroll">
                 {transactions.map((transactionData) => (
-                    transactionData.transactions.length > 0 && <Month
+                    transactionData.transactions.length > 0 && <Transaction
                         key={`${transactionData.month.year}-${transactionData.month.number}`}
                         month={transactionData.month.name}
                         year={transactionData.month.year}
                         transactions={transactionData.transactions}
+                        deleting={deleting}
+                        setDeleting={setDeleting}
                     />
                 ))}
             </div>
@@ -90,7 +95,17 @@ export default function Transactions() {
     );
 }
 
-const Month = ({ month, year, transactions }) => {
+const Transaction = ({ month, year, transactions, deleting, setDeleting }) => {
+    const handleDelete = async (transactionId) => {
+        try {
+          const db = firebase.firestore();
+          await db.collection('transactions').doc(transactionId).delete();
+          setDeleting(!deleting);
+        } catch (error) {
+          console.error('Error deleting transaction:', error);
+        }
+      };
+
     return (
         <div>
             <h2 className="mb-1 text-lg font-bold bg-gray-300">{month} {year}</h2>
@@ -99,6 +114,12 @@ const Month = ({ month, year, transactions }) => {
                     <p className="m-1 w-[40%]" >{transaction.name}</p>
                     <p className="m-1 w-[20%]" >{transaction.amount}</p>
                     <p className="m-1 w-[30%]" >{transaction.date}</p>
+                    <button
+                        className="m-1 bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded"
+                        onClick={() => handleDelete(transaction.id)}
+                    >
+                        Delete
+                    </button>
                 </div>
             ))}
         </div>

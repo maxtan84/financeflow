@@ -77,7 +77,7 @@ const Month = ({ month, monthNumber, year }) => {
   const [transactions, setTransactions] = useState([]);
   const [wants, setWants] = useState(0);
   const [needs, setNeeds] = useState(0);
-  const [other, setOther] = useState(1);
+  const [other, setOther] = useState(0);
 
   useEffect(() => {
     const getTransactions = () => {
@@ -134,7 +134,7 @@ const Month = ({ month, monthNumber, year }) => {
     fill = 1;
   }
   const data = {
-    labels: ['Wants', 'Needs', 'Other', 'None'],
+    labels: ['Wants', 'Needs', 'Other', 'No expenses this month!'],
     values: [wants, needs, other, fill],
     colors: ['#FF6384', '#36A2EB', '#FFCE56', '#808080'],
   };
