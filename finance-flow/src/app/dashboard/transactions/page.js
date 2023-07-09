@@ -68,7 +68,6 @@ export default function Transactions() {
             });
             setTransactions(sortedResults);
         };
-        console.log(deleting)
 
         if (months.length > 0) {
             fetchTransactions();
@@ -112,13 +111,13 @@ const Transaction = ({ month, year, transactions, deleting, setDeleting }) => {
             {transactions.map((transaction) => (
                 <div key={transaction.id} className="flex">
                     <p className="m-1 w-[40%]" >{transaction.name}</p>
-                    <p className="m-1 w-[20%]" >{transaction.amount}</p>
+                    <p className="m-1 w-[20%]" >${transaction.amount}</p>
                     <p className="m-1 w-[30%]" >{transaction.date}</p>
                     <button
-                        className="m-1 bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded"
+                        className="m-1 bg-gray-500 hover:bg-red-700 text-white px-1 rounded"
                         onClick={() => handleDelete(transaction.id)}
                     >
-                        Delete
+                        X
                     </button>
                 </div>
             ))}

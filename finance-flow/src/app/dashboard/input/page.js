@@ -82,7 +82,7 @@ export default function Input() {
                   <option value="Groceries">Groceries</option>
                   <option value="Transportation">Transportation</option>
                   <option value="Utilities">Utilities</option>
-                  <option value="Education and Health">Education and Health</option>
+                  <option value="Health and Education">Health and Education</option>
                   <option value="Other">Other</option>
                 </select>
               </div>

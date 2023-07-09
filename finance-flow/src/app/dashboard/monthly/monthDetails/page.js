@@ -21,6 +21,7 @@ export default function MonthlyDetails({ searchParams }) {
   const [utilities, setUtilities] = useState(0);
   const [other, setOther] = useState(0);
 
+  const [budgetExists, setBudgetExists] = useState(false);
   const [wBudget, setWantsBudget] = useState(0);
   const [nBudget, setNeedsBudget] = useState(0);
   const [oBudget, setOthersBudget] = useState(0);
@@ -31,7 +32,7 @@ export default function MonthlyDetails({ searchParams }) {
   const categories = [
     'Shopping',
     'Dining Out',
-    'Travel & Entertainment',
+    'Travel and Entertainment',
     'Home',
     'Groceries',
     'Transportation',
@@ -112,7 +113,8 @@ export default function MonthlyDetails({ searchParams }) {
             setWantsBudget(data[0].wantsBudget);
             setNeedsBudget(data[0].needsBudget);
             setOthersBudget(data[0].othersBudget);
-
+            // maybe should handle error if no budget exists
+            setBudgetExists(true);
           })
       };
 
@@ -124,7 +126,7 @@ export default function MonthlyDetails({ searchParams }) {
   const label = 'Spending in ' + month;
 
   const data = {
-    labels: ['Shopping', 'Dining Out', 'Travel & Entertainment', 'Home', 'Groceries', 'Transportation', 'Health and Education' ,'Other'],
+    labels: ['Shopping', 'Dining Out', 'Travel and Entertainment', 'Home', 'Groceries', 'Transportation', 'Health and Education' ,'Other'],
     datasets: [
       {
         label: label,
@@ -170,17 +172,24 @@ export default function MonthlyDetails({ searchParams }) {
             </ul>
           </div>
         )}
-        {!selectedCategory && (
+        {!selectedCategory && budgetExists && (
           <div className="m-2">
             <h3 className="font-bold underline underline-offset-2 text-xl my-2 ">{month} Summary</h3>
             {/* pass in average of months so we can display how much they are spending based on average */}
             {overWants && <p>You are over your Wants budget by <span className="font-bold">${totalWants - wBudget}</span></p>}
-            {!overWants && <p>You are under your Wants budget by <span>${wBudget - totalWants}</span></p>}
-            {overNeeds && <p>You are over your Needs budget by ${totalNeeds - nBudget}</p>}
-            {!overNeeds && <p>You are under your Needs budget by ${nBudget - totalNeeds}</p>}
-            {overOthers && <p>You are over your Others budget by ${totalOthers - oBudget}</p>}
-            {!overOthers && <p>You are under your Others budget by ${oBudget - totalOthers}</p>}
+            {!overWants && <p>You are under your Wants budget by <span className="font-bold">${wBudget - totalWants}</span></p>}
+            {overNeeds && <p>You are over your Needs budget by <span className="font-bold">${totalNeeds - nBudget}</span></p>}
+            {!overNeeds && <p>You are under your Needs budget by <span className="font-bold">${nBudget - totalNeeds}</span></p>}
+            {overOthers && <p>You are over your Others budget by <span className="font-bold">${totalOthers - oBudget}</span></p>}
+            {!overOthers && <p>You are under your Others budget by <span className="font-bold">${oBudget - totalOthers}</span></p>}
+            {/* need to consider past tense for wording */}
           </div>
+        )}
+        {!selectedCategory && !budgetExists && (
+          <div className="m-2">
+            <h3 className="font-bold underline underline-offset-2 text-xl my-2 ">{month} Summary</h3>
+            <p>You have not set a budget for this month yet.</p>
+          </div> 
         )}
       </div>
       

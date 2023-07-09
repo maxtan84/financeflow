@@ -14,6 +14,7 @@ export default function Dashboard() {
   const lastYear = currentYear - 1;
   const month = today.getMonth() + 1;
   const userId = localStorage.getItem('userId');
+  const [totalSpending, setTotalSpending] = useState(0);
   const [totalWants, setTotalWants] = useState(0);
   const [totalNeeds, setTotalNeeds] = useState(0);
   const [totalOthers, setTotalOthers] = useState(0);
@@ -24,7 +25,7 @@ export default function Dashboard() {
       const db = firebase.firestore();
       const startDate = `${lastYear}-${month.toString().padStart(2, '0')}-31`;
       const endDate = `${currentYear}-${month.toString().padStart(2, '0')}-31`;
-      console.log(startDate, endDate)
+      const monthStartDate = `${currentYear}-${month.toString().padStart(2, '0')}-01`;
       db.collection('transactions')
         .where('userId', '==', userId)
         .where('date', '>=', startDate)
@@ -41,7 +42,8 @@ export default function Dashboard() {
       let othersTotal = 0;
 
       data.forEach((transaction) => {
-          if (transaction.category === 'Shopping' || transaction.category === 'Dining out' || transaction.category === 'Travel and Entertainment') {
+          if (transaction.category === 'Shopping' || transaction.category === 'Dining Out' || transaction.category === 'Travel and Entertainment') {
+            console.log(transaction.amount);
               wantsTotal += parseInt(transaction.amount);
           }
       });
@@ -61,8 +63,9 @@ export default function Dashboard() {
       setTotalWants((prevTotal) => prevTotal + wantsTotal);
       setTotalNeeds((prevTotal) => prevTotal + needsTotal);
       setTotalOthers((prevTotal) => prevTotal + othersTotal);
+      setTotalSpending((prevTotal) => prevTotal + wantsTotal + needsTotal + othersTotal);
+      
       setNumMonths((prevNum) => prevNum + 1);
-      console.log(totalWants, totalNeeds, totalOthers, numMonths);
     })
     .catch((error) => {
         console.error('Error fetching transactions:', error);
@@ -71,16 +74,18 @@ export default function Dashboard() {
     getTransactions();
     
   }, [userId]);
-
+  console.log(totalWants, totalNeeds, totalOthers, totalSpending)
   return (
     <FadeInView>
       <div className="flex flex-col h-screen">
         <DashHeader className="self-start" title="DashBoard" />
         <div className="flex-grow">
           <h1>Welcome Back!</h1>
+          <h2>Your average spending per month this past year was: </h2>
+          <h3>Total Spending for the month of {}: ${totalSpending}</h3>
 
 
-        </div> {/* content */}
+        </div> 
         <DashFooter className="self-end mt-auto" curFocus={"dash"}/>
       </div>
     </FadeInView>
