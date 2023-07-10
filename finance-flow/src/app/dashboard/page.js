@@ -18,9 +18,14 @@ export default function Dashboard() {
   const [totalWants, setTotalWants] = useState(0);
   const [totalNeeds, setTotalNeeds] = useState(0);
   const [totalOthers, setTotalOthers] = useState(0);
-  const [numMonths, setNumMonths] = useState(0);
+  const numMonths = 12;
 
   useEffect(() => {
+    setTotalSpending(0);
+    setTotalWants(0);
+    setTotalNeeds(0);
+    setTotalOthers(0);
+    // Delete these 3 lines above after deployment
     const getTransactions = () => {
       const db = firebase.firestore();
       const startDate = `${lastYear}-${month.toString().padStart(2, '0')}-31`;
@@ -43,7 +48,6 @@ export default function Dashboard() {
 
       data.forEach((transaction) => {
           if (transaction.category === 'Shopping' || transaction.category === 'Dining Out' || transaction.category === 'Travel and Entertainment') {
-            console.log(transaction.amount);
               wantsTotal += parseInt(transaction.amount);
           }
       });
@@ -64,8 +68,6 @@ export default function Dashboard() {
       setTotalNeeds((prevTotal) => prevTotal + needsTotal);
       setTotalOthers((prevTotal) => prevTotal + othersTotal);
       setTotalSpending((prevTotal) => prevTotal + wantsTotal + needsTotal + othersTotal);
-      
-      setNumMonths((prevNum) => prevNum + 1);
     })
     .catch((error) => {
         console.error('Error fetching transactions:', error);
@@ -74,14 +76,15 @@ export default function Dashboard() {
     getTransactions();
     
   }, [userId]);
-  console.log(totalWants, totalNeeds, totalOthers, totalSpending)
+  const averageSpending = Math.round(totalSpending/numMonths) + (Math.round(100*(totalSpending/numMonths))%100)/100;
+  console.log(totalSpending, numMonths);
   return (
     <FadeInView>
       <div className="flex flex-col h-screen">
         <DashHeader className="self-start" title="DashBoard" />
         <div className="flex-grow">
           <h1>Welcome Back!</h1>
-          <h2>Your average spending per month this past year was: </h2>
+          <h2>Your average spending per month this past year was: ${averageSpending}</h2>
           <h3>Total Spending for the month of {}: ${totalSpending}</h3>
 
 
