@@ -175,13 +175,12 @@ export default function MonthlyDetails({ searchParams }) {
         {!selectedCategory && budgetExists && (
           <div className="m-2">
             <h3 className="font-bold underline underline-offset-2 text-xl my-2 ">{month} Summary</h3>
-            {/* pass in average of months so we can display how much they are spending based on average */}
-            {overWants && <p>You are over your Wants budget by <span className="font-bold">${totalWants - wBudget}</span></p>}
-            {!overWants && <p>You are under your Wants budget by <span className="font-bold">${wBudget - totalWants}</span></p>}
-            {overNeeds && <p>You are over your Needs budget by <span className="font-bold">${totalNeeds - nBudget}</span></p>}
-            {!overNeeds && <p>You are under your Needs budget by <span className="font-bold">${nBudget - totalNeeds}</span></p>}
-            {overOthers && <p>You are over your Others budget by <span className="font-bold">${totalOthers - oBudget}</span></p>}
-            {!overOthers && <p>You are under your Others budget by <span className="font-bold">${oBudget - totalOthers}</span></p>}
+            {overWants && <p>You are <i>over</i> your Wants budget by <span className="font-bold">${totalWants - wBudget}</span></p>}
+            {!overWants && <p>You are <i>under</i> your Wants budget by <span className="font-bold">${wBudget - totalWants}</span></p>}
+            {overNeeds && <p>You are <i>over</i> your Needs budget by <span className="font-bold">${totalNeeds - nBudget}</span></p>}
+            {!overNeeds && <p>You are <i>under</i> your Needs budget by <span className="font-bold">${nBudget - totalNeeds}</span></p>}
+            {overOthers && <p>You are <i>over</i> your Others budget by <span className="font-bold">${totalOthers - oBudget}</span></p>}
+            {!overOthers && <p>You are <i>under</i> your Others budget by <span className="font-bold">${oBudget - totalOthers}</span></p>}
             {/* need to consider past tense for wording */}
           </div>
         )}

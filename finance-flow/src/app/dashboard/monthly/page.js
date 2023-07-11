@@ -106,7 +106,7 @@ const Month = ({ month, monthNumber, year }) => {
       });
 
       data.forEach((transaction) => {
-          if (transaction.category === 'Home' || transaction.category === 'Groceries' || transaction.category === 'Transportation' || transaction.category === 'Utilities' || transaction.category === 'Education' || transaction.category === 'Health') {
+          if (transaction.category === 'Home' || transaction.category === 'Groceries' || transaction.category === 'Transportation' || transaction.category === 'Utilities' || transaction.category === 'Health and Education') {
               needsTotal += parseInt(transaction.amount);
           }
       });
