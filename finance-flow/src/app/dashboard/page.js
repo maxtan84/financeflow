@@ -115,6 +115,10 @@ export default function Dashboard() {
     <FadeInView>
       <div className="flex flex-col h-screen">
         <DashHeader className="self-start" title="DashBoard" />
+        <button className="self-end m-2 p-2 bg-green-700 rounded text-white text-sm cursor-pointer">
+          View annual spending trends
+        </button>
+        {/* add annual line graph here */}
         <div className="flex-grow flex flex-col justify-center items-center text-center">
           <h1 className="text-2xl font-semibold">Welcome Back!</h1>
           {monthTotal > averageSpending ? <h2 className="m-1">You are spending <i>more</i> than average this month. </h2> : <h2 className="m-1">You are spending <i>less</i> than average this month! </h2>}

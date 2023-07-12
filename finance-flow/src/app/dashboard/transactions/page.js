@@ -75,6 +75,7 @@ export default function Transactions() {
     }, [months, userId, deleting]);
 
     return (
+        // transition slide items in from right
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Past Transactions" />
             <div className="flex-grow overflow-scroll">
@@ -106,7 +107,7 @@ const Transaction = ({ month, year, transactions, deleting, setDeleting }) => {
       };
 
     return (
-        <div>
+        <div className="overflow-x-hidden">
             <h2 className="mb-1 text-lg font-bold bg-gray-300">{month} {year}</h2>
             {transactions.map((transaction) => (
                 <div key={transaction.id} className="flex">
