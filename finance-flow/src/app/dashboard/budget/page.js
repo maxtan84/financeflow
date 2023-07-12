@@ -4,6 +4,7 @@ import DashHeader from "@/app/components/dash-header"
 import { useState } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
+import FadeInView from "@/app/components/FadeInView";
 
 export default function Budget() {
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -62,7 +63,9 @@ export default function Budget() {
   return (
     <div className="flex flex-col h-screen">
       <DashHeader className="self-start" title="Set Monthly Budget" />
+      
       <div className="flex-grow p-8">
+        <FadeInView> 
         <div className="mb-6">
           <label htmlFor="month" className="font-bold mb-1">
             Select Month:
@@ -123,6 +126,7 @@ export default function Budget() {
         >
           Submit Budget
         </button>
+        </FadeInView>
       </div>
       <DashFooter className="self-end mt-auto" curFocus={"budget"} />
     </div>

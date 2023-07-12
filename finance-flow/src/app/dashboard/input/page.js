@@ -4,6 +4,7 @@ import DashHeader from "@/app/components/dash-header"
 import { useState } from "react";
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
+import FadeInView from "@/app/components/FadeInView";
 
 export default function Input() {
     const userId = localStorage.getItem('userId');
@@ -37,7 +38,9 @@ export default function Input() {
       return (
         <div className="flex flex-col h-screen">
           <DashHeader className="self-start" title="Input New Expense" />
+          
           <div className="flex-grow m-4 text-lg flex justify-center overflow-scroll">
+            <FadeInView> 
             <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 ">
               <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 font-bold mb-4">Name of Transaction:</label>
@@ -101,7 +104,9 @@ export default function Input() {
                 Submit
               </button>
             </form>
+            </FadeInView>
           </div>
+          
           <DashFooter className="self-end mt-auto" curFocus="input" />
         </div>
       );

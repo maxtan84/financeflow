@@ -7,7 +7,7 @@ import { useEffect } from "react"
 import Link from "next/link"
 import firebase from "firebase/compat/app"
 import 'firebase/compat/firestore'
-
+import FadeInView from "@/app/components/FadeInView"
 
 export default function Monthly() {
     const today = new Date();
@@ -42,6 +42,7 @@ export default function Monthly() {
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Monthly Spendings" />
             <div className="overflow-scroll">
+              <FadeInView>  
                 <div className="flex-grow flex flex-wrap w-full justify-center">
                     <h2 className="relative pl-3 py-2 font-bold self-start bg-gray-300 w-full h-auto">{currentYear}</h2>
                     {currentYearMonths.map((month) => (
@@ -66,6 +67,7 @@ export default function Monthly() {
                     ))}
                 </div>
                 )}
+              </FadeInView>
             </div>
             <DashFooter className="self-end mt-auto" curFocus={"calendar"} />
         </div>

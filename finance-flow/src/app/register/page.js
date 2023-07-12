@@ -22,9 +22,11 @@ export default function Register() {
     try {
         await auth.createUserWithEmailAndPassword(email, password);
         console.log('Registered successfully!');
+        alert('Registered successfully!')
         router.push('/');
     } catch (error) {
         console.error('Registration error:', error);
+        alert('Registration error: ' + error.message);
     }
   };
 
@@ -37,14 +39,13 @@ export default function Register() {
         <h1 className="text-2xl mt-10 w-2/3 text-center">Register to start your saving!</h1>
         <form className="mt-8 flex flex-col items-left w-3/4" onSubmit={handleLogin}>
           <h2>Email</h2>
-          <input onChange={handleEmailChange} className="px-3 mt-3 w-full h-12 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500" type="text" placeholder="Email" />
+          <input onChange={handleEmailChange} className="px-3 mt-3 w-full h-12 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500" type="email" placeholder="maryjane@gmail.com" />
 
           <h2 className="mt-5">Create password</h2>
-          <input onChange={handlePasswordChange} className="px-3 mt-3 w-full h-12 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500" type="password" placeholder="Password" />
+          <input onChange={handlePasswordChange} className="px-3 mt-3 w-full h-12 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500" type="password" placeholder="iN$eRT_sTr0nG-pa$$w0rD!" />
           <a className="text-blue-500 mt-3 text-sm self-end" href="/">Login</a>
           <button className="w-full h-10 rounded-md bg-gray-300 text-white mt-5 hover:bg-blue-500 ease-in-out duration-200" type="submit">Register</button>
         </form>
-        <button className="w-3/4 h-10 rounded-md bg-gray-300 text-white mt-5 hover:bg-blue-500 ease-in-out duration-200">Register with Google</button>
       </div>
     </div>
   );

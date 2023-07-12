@@ -117,14 +117,13 @@ export default function Dashboard() {
         <DashHeader className="self-start" title="DashBoard" />
         <div className="flex-grow flex flex-col justify-center items-center text-center">
           <h1 className="text-2xl font-semibold">Welcome Back!</h1>
-          {monthTotal > averageSpending ? <h2 className="my-1">You are spending <i>more</i> than average this month!</h2> : <h2 className="m-1">You are spending <i>less</i> than average this month!</h2>}
+          {monthTotal > averageSpending ? <h2 className="m-1">You are spending <i>more</i> than average this month. </h2> : <h2 className="m-1">You are spending <i>less</i> than average this month! </h2>}
           <div> 
             <PieChart 
               data={data}
             />
           </div>
-          <h3 className="my-2">Total Spending for the month of {curMonth}: <strong>${monthTotal}</strong></h3>
-          
+          <h3 className="my-2">Total Spending for the month of {curMonth}: <strong>${monthTotal}</strong></h3> 
         </div> 
         <DashFooter className="self-end mt-auto" curFocus={"dash"}/>
       </div>

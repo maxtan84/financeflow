@@ -6,6 +6,7 @@ import firebase from "firebase/compat/app"
 import 'firebase/compat/firestore'
 import { useRouter } from "next/navigation"
 import BarGraph from "@/app/components/BarGraph"
+import FadeInView from "@/app/components/FadeInView"
 
 export default function MonthlyDetails({ searchParams }) {
   const userId = localStorage.getItem("userId");
@@ -146,6 +147,7 @@ export default function MonthlyDetails({ searchParams }) {
     <div className="flex flex-col h-screen">
       <DashHeader className="self-start" title={`Analysis for ${month}`} />
       <div className="flex-grow overflow-scroll">
+        <FadeInView>
         <BarGraph data={data} />
         {categories.map((category) => (
           <Button
@@ -190,6 +192,7 @@ export default function MonthlyDetails({ searchParams }) {
             <p>You have not set a budget for this month yet.</p>
           </div> 
         )}
+        </FadeInView>
       </div>
       
       <DashFooter className="self-end mt-auto" curFocus={"calendar"} />
