@@ -10,7 +10,7 @@ const LineGraph = ({ data }) => {
   };
 
   return (
-    <div>
+    <div className="m-2">
       <Line data={data} options={options} />
     </div>
   );

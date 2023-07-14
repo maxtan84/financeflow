@@ -25,6 +25,7 @@ export default function Dashboard() {
   const [monthlyNeeds, setMonthlyNeeds] = useState(0);
   const [monthlyOthers, setMonthlyOthers] = useState(0);
   const [monthData, setMonthData] = useState([]);
+  const [mainDash, setMainDash] = useState(true);
   
   const numMonths = 12;
 
@@ -156,7 +157,7 @@ export default function Dashboard() {
         });
     
         Promise.all(promises).then((resolvedMonthData) => {
-          setMonthData(resolvedMonthData);
+          setMonthData(resolvedMonthData.reverse());
         });
       } catch (error) {
         console.error('Error fetching transactions:', error);
@@ -182,9 +183,8 @@ export default function Dashboard() {
     const labelDate = new Date();
     labelDate.setMonth(labelDate.getMonth() - i);
     const labelMonth = labelDate.toLocaleString('default', { month: 'short' });
-    lineLabels.push(labelMonth);
+    lineLabels.push(labelMonth + ' ' + labelDate.getFullYear());
   }
-  lineLabels.reverse();
 
   const lineData = {
     labels: lineLabels,
@@ -198,25 +198,43 @@ export default function Dashboard() {
     ],
   };
 
+  const switchDash = () => {
+    setMainDash(!mainDash);
+  };
+
   return (
     <FadeInView>
       <div className="flex flex-col h-screen">
         <DashHeader className="self-start" title="DashBoard" />
-        <button className="self-end m-2 p-2 bg-green-700 rounded text-white text-sm cursor-pointer">
-          View annual spending trends
-        </button>
-        <LineGraph data={lineData} />
-        {/* add annual line graph here */}
-        <div className="flex-grow flex flex-col justify-center items-center text-center">
-          <h1 className="text-2xl font-semibold">Welcome Back!</h1>
-          {monthTotal > averageSpending ? <h2 className="m-1">You are spending <i>more</i> than average this month. </h2> : <h2 className="m-1">You are spending <i>less</i> than average this month! </h2>}
-          <div> 
-            <PieChart 
-              data={pieData}
-            />
-          </div>
-          <h3 className="my-2">Total Spending for the month of {curMonth}: <strong>${monthTotal}</strong></h3> 
-        </div> 
+        { mainDash && 
+          <button className="self-end m-2 p-2 bg-green-700 rounded text-white text-sm cursor-pointer" onClick={switchDash}>
+                View annual spending trends
+          </button>
+        }
+        { !mainDash &&
+          <button className="self-end m-2 p-2 bg-green-700 rounded text-white text-sm cursor-pointer" onClick={switchDash}>
+            Back to main
+          </button>
+        }
+        
+        {!mainDash && 
+          <div className="flex-grow flex flex-col justify-center items-center text-center">
+            {/* add some text here */}
+            <LineGraph data={lineData} />
+          </div> 
+        }
+        {mainDash && 
+          <div className="flex-grow flex flex-col justify-center items-center text-center">
+            <h1 className="text-2xl font-semibold">Welcome Back!</h1>
+            {monthTotal > averageSpending ? <h2 className="m-1">You are spending <i>more</i> than average this month. </h2> : <h2 className="m-1">You are spending <i>less</i> than average this month! </h2>}
+            <div> 
+              <PieChart 
+                data={pieData}
+              />
+            </div>
+            <h3 className="my-2">Total Spending for the month of {curMonth}: <strong>${monthTotal}</strong></h3> 
+          </div> 
+        }
         <DashFooter className="self-end mt-auto" curFocus={"dash"}/>
       </div>
     </FadeInView>
