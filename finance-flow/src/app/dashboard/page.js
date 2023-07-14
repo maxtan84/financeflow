@@ -190,7 +190,7 @@ export default function Dashboard() {
     labels: lineLabels,
     datasets: [
       {
-        label: 'Average Spending',
+        label: 'Spending',
         data: monthData,
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -219,20 +219,29 @@ export default function Dashboard() {
         
         {!mainDash && 
           <div className="flex-grow flex flex-col justify-center items-center text-center">
-            {/* add some text here */}
+            {monthTotal > averageSpending ? 
+            <div className="m-2"> 
+              <h2 className="m-1 text-xl">You are spending <i>more</i> than average this month. </h2> 
+              <p className="text-sm">Check your monthly analysis to see where you can save.</p>
+            </div>
+              : 
+            <div className="m-2">
+              <h2 className="m-1">You are spending <i>less</i> than average this month! </h2>
+              <p>Keep up the good work!</p>
+            </div>
+            }
             <LineGraph data={lineData} />
           </div> 
         }
         {mainDash && 
           <div className="flex-grow flex flex-col justify-center items-center text-center">
-            <h1 className="text-2xl font-semibold">Welcome Back!</h1>
-            {monthTotal > averageSpending ? <h2 className="m-1">You are spending <i>more</i> than average this month. </h2> : <h2 className="m-1">You are spending <i>less</i> than average this month! </h2>}
+            <h1 className="text-2xl font-semibold mb-1">Welcome Back!</h1>
+            <h3 className="mb-3">Total Spending for the month of {curMonth}: <strong>${monthTotal}</strong></h3> 
             <div> 
               <PieChart 
                 data={pieData}
               />
             </div>
-            <h3 className="my-2">Total Spending for the month of {curMonth}: <strong>${monthTotal}</strong></h3> 
           </div> 
         }
         <DashFooter className="self-end mt-auto" curFocus={"dash"}/>

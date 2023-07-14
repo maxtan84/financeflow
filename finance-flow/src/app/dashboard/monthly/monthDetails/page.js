@@ -189,7 +189,7 @@ export default function MonthlyDetails({ searchParams }) {
         {!selectedCategory && !budgetExists && (
           <div className="m-2">
             <h3 className="font-bold underline underline-offset-2 text-xl my-2 ">{month} Summary</h3>
-            <p>You have not set a budget for this month yet.</p>
+            <p>No budget was set for this month.</p>
           </div> 
         )}
         </FadeInView>
