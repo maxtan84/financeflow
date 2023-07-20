@@ -75,7 +75,10 @@ export default function Monthly() {
 }
 
 const Month = ({ month, monthNumber, year }) => {
-  const userId = localStorage.getItem('userId');
+  let userId = "test";
+  if (typeof window !== "undefined") {
+      userId = localStorage.getItem("userId");
+  }
   const [transactions, setTransactions] = useState([]);
   const [wants, setWants] = useState(0);
   const [needs, setNeeds] = useState(0);

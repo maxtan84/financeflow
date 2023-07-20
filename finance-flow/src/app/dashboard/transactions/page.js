@@ -6,7 +6,10 @@ import firebase from "firebase/compat/app"
 import 'firebase/compat/firestore'
 
 export default function Transactions() {
-    const userId = localStorage.getItem("userId");
+    let userId = "test";
+    if (typeof window !== "undefined") {
+        userId = localStorage.getItem("userId");
+    }
     const [transactions, setTransactions] = useState([]);
     const [months, setMonths] = useState([]);
     const [deleting, setDeleting] = useState(false);
