@@ -67,7 +67,7 @@ export default function Budget() {
     <div className="flex flex-col h-screen">
       <DashHeader className="self-start" title="Set Monthly Budget" />
       
-      <div className="flex-grow p-8">
+      <div className="flex-grow p-8 overflow-auto">
         <FadeInView> 
         <div className="mb-6">
           <label htmlFor="month" className="font-bold mb-1">
