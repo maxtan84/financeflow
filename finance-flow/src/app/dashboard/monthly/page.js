@@ -1,13 +1,13 @@
 'use client'
-import DashFooter from "@/app/components/dash-footer"
-import DashHeader from "@/app/components/dash-header"
-import PieChart from "@/app/components/PieChart"
+import DashFooter from "@/components/dash-footer"
+import DashHeader from "@/components/dash-header"
+import PieChart from "@/components/PieChart"
 import { useState } from "react"
 import { useEffect } from "react"
 import Link from "next/link"
 import firebase from "firebase/compat/app"
 import 'firebase/compat/firestore'
-import FadeInView from "@/app/components/FadeInView"
+import FadeInView from "@/components/FadeInView"
 
 export default function Monthly() {
     const today = new Date();

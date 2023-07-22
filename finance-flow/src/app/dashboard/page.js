@@ -1,9 +1,9 @@
 'use client'
-import DashFooter from "../components/dash-footer";
-import DashHeader from "../components/dash-header";
-import FadeInView from "../components/FadeInView";
-import PieChart from "@/app/components/PieChart"
-import LineGraph from "../components/LineGraph";
+import DashFooter from "../../components/dash-footer";
+import DashHeader from "../../components/dash-header";
+import FadeInView from "../../components/FadeInView";
+import PieChart from "@/components/PieChart"
+import LineGraph from "../../components/LineGraph";
 import { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';

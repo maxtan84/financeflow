@@ -1,6 +1,6 @@
 'use client'
-import DashFooter from "@/app/components/dash-footer"
-import DashHeader from "@/app/components/dash-header"
+import DashFooter from "@/components/dash-footer"
+import DashHeader from "@/components/dash-header"
 import { useState, useEffect } from "react"
 import firebase from "firebase/compat/app"
 import 'firebase/compat/firestore'
