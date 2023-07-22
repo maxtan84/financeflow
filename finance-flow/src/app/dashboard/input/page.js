@@ -7,7 +7,10 @@ import 'firebase/compat/firestore';
 import FadeInView from "@/app/components/FadeInView";
 
 export default function Input() {
-    const userId = localStorage.getItem('userId');
+    let userId = "test";
+    if (typeof window !== "undefined") {
+        userId = localStorage.getItem("userId");
+    }
     const [transaction, setTransaction] = useState({
         name: "",
         amount: "",
