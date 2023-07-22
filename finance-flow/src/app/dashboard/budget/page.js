@@ -18,10 +18,7 @@ export default function Budget() {
       return;
     }
 
-    let userId = "test";
-    if (typeof window !== "undefined") {
-      userId = localStorage.getItem("userId");
-    }
+    const userId = localStorage.getItem("userId");
     const db = firebase.firestore();
 
     const budgetData = {

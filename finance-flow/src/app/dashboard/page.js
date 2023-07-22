@@ -15,11 +15,7 @@ export default function Dashboard() {
   const lastYear = currentYear - 1;
   const month = today.getMonth() + 1;
   const curMonth = today.toLocaleString("default", { month: "long" });
-  let userId = "test";
-  if (typeof window !== "undefined") {
-    userId = localStorage.getItem("userId");
-  }
-
+  const userId = localStorage.getItem('userId');
   const [totalSpending, setTotalSpending] = useState(0);
   const [totalWants, setTotalWants] = useState(0);
   const [totalNeeds, setTotalNeeds] = useState(0);

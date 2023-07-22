@@ -9,10 +9,7 @@ import BarGraph from "@/app/components/BarGraph"
 import FadeInView from "@/app/components/FadeInView"
 
 export default function MonthlyDetails({ searchParams }) {
-  let userId = "test";
-  if (typeof window !== "undefined") {
-      userId = localStorage.getItem("userId");
-  }
+  const userId = localStorage.getItem("userId");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [shopping, setShopping] = useState(0);
