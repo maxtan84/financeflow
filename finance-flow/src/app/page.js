@@ -34,44 +34,11 @@ export default function Home() {
     }
   };
 
-  const handlePlaidSuccess = async (publicToken, metadata) => {
-    try {
-      console.log('Public Token:', publicToken);
-      console.log('Metadata:', metadata);
-
-      // You can call your backend endpoint here to exchange the public token for an access token
-      // and handle the Plaid success event, similar to the previous examples
-
-      // Redirect the user to the dashboard or a specific page
-      router.push('/dashboard');
-    } catch (error) {
-      console.error('Plaid Link error:', error);
-    }
-  };
-
-  const generatePlaidLinkToken = async () => {
-    try {
-      const response = await fetch('/src/api/plaid/token.js');
-      if (!response.ok) {
-        throw new Error('Failed to fetch Plaid Link token');
-      }
-  
-      const data = await response.json();
-      const linkToken = data.linkToken;
-  
-      return (
-        <PlaidLink
-          clientName="User"
-          env="sandbox"
-          token={linkToken}
-          onSuccess={handlePlaidSuccess}
-        >
-          Connect with your bank
-        </PlaidLink>
-      );
-    } catch (error) {
-      return null;
-    }
+  const makeApiCall = async () => {
+    await fetch('/api/hello', {
+      method: 'POST',
+      body: JSON.stringify({ name: 'John Doe' }),
+    });
   };
 
   return (
@@ -91,7 +58,7 @@ export default function Home() {
           <a className="text-blue-500 mt-3 text-sm self-end" href="/register">New? Register here!</a>
           <button className="w-full h-10 rounded-md bg-gray-300 text-white mt-5 hover:bg-blue-500 ease-in-out duration-200" type="submit">Login</button>
         </form>
-        {/* {loggedIn && generatePlaidLinkToken()} */}
+        <button onClick={makeApiCall}>Make call</button>
       </div>
     </div>
   );
