@@ -1,10 +1,10 @@
 'use client'
-import DashFooter from "@/components/dash-footer"
-import DashHeader from "@/components/dash-header"
+import DashFooter from "../../components/dash-footer"
+import DashHeader from "../../components/dash-header"
 import { useState } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import FadeInView from "@/components/FadeInView";
+import FadeInView from "../../components/FadeInView";
 
 export default function Budget() {
   const [selectedMonth, setSelectedMonth] = useState("");

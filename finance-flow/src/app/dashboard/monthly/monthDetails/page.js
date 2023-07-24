@@ -1,12 +1,12 @@
 'use client'
-import DashFooter from "@/components/dash-footer"
-import DashHeader from "@/components/dash-header"
+import DashFooter from "../../../components/dash-footer";
+import DashHeader from "../../../components/dash-header";
+import FadeInView from "../../../components/FadeInView";
 import { useState, useEffect } from "react"
 import firebase from "firebase/compat/app"
 import 'firebase/compat/firestore'
 import { useRouter } from "next/navigation"
-import BarGraph from "@/components/BarGraph"
-import FadeInView from "@/components/FadeInView"
+import BarGraph from "../../../components/BarGraph"
 
 export default function MonthlyDetails({ searchParams }) {
   let userId = "test";
