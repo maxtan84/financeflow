@@ -35,7 +35,7 @@ export default function Home() {
   };
 
   const makeApiCall = async () => {
-    await fetch('/api/hello', {
+    await fetch('/api/create-link-token', {
       method: 'POST',
       body: JSON.stringify({ name: 'John Doe' }),
     });
