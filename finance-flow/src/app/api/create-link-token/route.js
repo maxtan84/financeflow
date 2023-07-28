@@ -23,7 +23,7 @@ export async function POST(req) {
         client_user_id: 'user',
       },
       client_name: 'Plaid Test App',
-      products: ['auth'],
+      products: ['transactions'],
       language: 'en',
       redirect_uri: 'https://localhost:3000/', // Replace with your redirect URL
       country_codes: ['US', 'CA'], // Replace with your desired country codes
