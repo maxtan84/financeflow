@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { auth } from '/firebase-config';
-import { PlaidLink } from 'react-plaid-link';
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -34,13 +33,6 @@ export default function Home() {
     }
   };
 
-  const makeApiCall = async () => {
-    await fetch('/api/create-link-token', {
-      method: 'POST',
-      body: JSON.stringify({ name: 'John Doe' }),
-    });
-  };
-
   return (
     <div className="bg-cover h-screen flex items-center justify-center" style={{backgroundImage: `url('/images/login-bg.jpg')`}}>
       <div className="bg-white h-[90%] w-4/5 flex flex-col items-center rounded-lg">
@@ -58,7 +50,6 @@ export default function Home() {
           <a className="text-blue-500 mt-3 text-sm self-end" href="/register">New? Register here!</a>
           <button className="w-full h-10 rounded-md bg-gray-300 text-white mt-5 hover:bg-blue-500 ease-in-out duration-200" type="submit">Login</button>
         </form>
-        <button onClick={makeApiCall}>Make call</button>
       </div>
     </div>
   );

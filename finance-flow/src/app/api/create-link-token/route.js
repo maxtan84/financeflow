@@ -23,7 +23,7 @@ export async function POST(req) {
         client_user_id: 'user',
       },
       client_name: 'Plaid Test App',
-      products: ['transactions'],
+      products: ['transactions', 'auth'],
       language: 'en',
       redirect_uri: 'https://localhost:3000/', // Replace with your redirect URL
       country_codes: ['US', 'CA'], // Replace with your desired country codes
@@ -32,10 +32,10 @@ export async function POST(req) {
     const createTokenResponse = await plaidClient.linkTokenCreate(plaidRequest);
     const linkToken = createTokenResponse.data.link_token;
     console.log('Link token:', linkToken);
-    return new Response('WE GOOD', {
+    return new Response( JSON.stringify({"link_token": linkToken}), {
       status: 200,
       headers: {
-        link_token: linkToken,
+        "Content-Type": "application/json", 
       },
     });
   } catch (error) {

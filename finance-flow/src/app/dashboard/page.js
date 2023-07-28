@@ -7,9 +7,10 @@ import LineGraph from "../../components/LineGraph";
 import { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
+import { usePlaidLink } from 'react-plaid-link';
+import { axios } from 'axios';
 
 export default function Dashboard() {
-
   const today = new Date();
   const currentYear = today.getFullYear();
   const lastYear = currentYear - 1;
@@ -170,7 +171,6 @@ export default function Dashboard() {
 
     fetchData();
     getTransactions();
-
   }, [userId]);
 
   const averageSpending = Math.round(totalSpending/numMonths) + (Math.round(100*(totalSpending/numMonths))%100)/100;
@@ -206,10 +206,44 @@ export default function Dashboard() {
     setMainDash(!mainDash);
   };
 
+  const [linkToken, setLinkToken] = useState();
+  const [publicToken, setPublicToken] = useState();
+
+  useEffect(() => {
+    const fetchLinkToken = async () => {
+      const response = await fetch('/api/create-link-token', {
+        method: 'POST',
+        body: JSON.stringify({ name: 'John Doe' }),
+      });
+      const data = await response.json();
+      console.log(data);
+      setLinkToken(data.link_token);
+    };
+    fetchLinkToken();
+  }, []);
+
+  const { open, ready } = usePlaidLink({
+    token: linkToken,
+    onSuccess: (public_token, metadata) => {
+      setPublicToken(public_token);
+      console.log('success', public_token, metadata);
+      // send public_token to server
+    },
+    onExit: (err, metadata) => {
+      console.log('exit', err, metadata);
+    },
+  });
+
   return (
     <FadeInView>
       <div className="flex flex-col h-screen">
         <DashHeader className="self-start" title="DashBoard" />
+
+        {publicToken ? (<PlaidAuth publicToken={publicToken} />) : (
+        <button onClick={() => open()} disabled={!ready}>
+          Connect a bank account
+        </button>
+        )}
         { mainDash && 
           <button className="self-end m-2 p-2 bg-green-700 rounded text-white text-sm cursor-pointer" onClick={switchDash}>
                 View annual spending trends
@@ -251,5 +285,27 @@ export default function Dashboard() {
         <DashFooter className="self-end mt-auto" curFocus={"dash"}/>
       </div>
     </FadeInView>
+  );
+}
+
+const PlaidAuth = ({ publicToken }) => {
+  const [account, setAccount] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      let accessToken = await axios.post('/api/exchange-public-token', { public_token: publicToken });
+      console.log('accessToken', accessToken.data);
+      const auth = await axios.post('/api/auth', { access_token: accessToken.data.accessToken });
+      console.log('auth data ', auth.data);
+      setAccount(auth.data.numbers.ach[0]);
+    }
+    fetchData();
+  }, []);
+
+  return account && (
+    <>
+      <p>Account number: {account.account}</p>
+      <p>Routing number: {account.routing}</p>
+    </>
   );
 }
