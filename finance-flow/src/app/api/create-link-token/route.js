@@ -9,8 +9,8 @@ export async function POST(req) {
     basePath: PlaidEnvironments.sandbox, // Replace with your desired environment (sandbox/development/production)
     baseOptions: {
       headers: {
-        'PLAID-CLIENT-ID': '',
-        'PLAID-SECRET': '',
+        'PLAID-CLIENT-ID': process.env.PLAID_CLIENT_ID,
+        'PLAID-SECRET': process.env.PLAID_SECRET,
       },
     },
   });

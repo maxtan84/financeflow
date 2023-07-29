@@ -1,4 +1,4 @@
-import { Configuration, PlaidApi } from 'plaid';
+import { Configuration, PlaidApi, PlaidEnvironments } from 'plaid';
 import { NextResponse } from 'next/server'
 import axios from 'axios';
 
@@ -9,8 +9,8 @@ export async function POST(req) {
         basePath: PlaidEnvironments.sandbox, // Replace with your desired environment (sandbox/development/production)
         baseOptions: {
         headers: {
-            'PLAID-CLIENT-ID': '',
-            'PLAID-SECRET': '',
+            'PLAID-CLIENT-ID': process.env.PLAID_CLIENT_ID,
+            'PLAID-SECRET': process.env.PLAID_SECRET,
         },
         },
     });
@@ -18,16 +18,18 @@ export async function POST(req) {
     const plaidClient = new PlaidApi(configuration);
 
     try {
-        const access_token = req.body.access_token;
+        const data = await req.json();
+        const access_token = data.access_token;
         const plaidRequest = {
             access_token: access_token,
         };
         const plaidResponse = await plaidClient.authGet(plaidRequest);
         const plaidData = plaidResponse.data;
-        return new Response('WE GOOD', {
+        console.log('Plaid auth data:', plaidData);
+        return new Response(JSON.stringify({plaidData: plaidData}), {
             status: 200,
             headers: {
-              plaidData: plaidData,
+              "Content-Type": "application/json", 
             },
           });
     } catch (error) {

@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
 import { usePlaidLink } from 'react-plaid-link';
-import { axios } from 'axios';
+import axios from 'axios';
 
 export default function Dashboard() {
   const today = new Date();
@@ -213,7 +213,6 @@ export default function Dashboard() {
     const fetchLinkToken = async () => {
       const response = await fetch('/api/create-link-token', {
         method: 'POST',
-        body: JSON.stringify({ name: 'John Doe' }),
       });
       const data = await response.json();
       console.log(data);
@@ -293,14 +292,27 @@ const PlaidAuth = ({ publicToken }) => {
 
   useEffect(() => {
     async function fetchData() {
-      let accessToken = await axios.post('/api/exchange-public-token', { public_token: publicToken });
-      console.log('accessToken', accessToken.data);
-      const auth = await axios.post('/api/auth', { access_token: accessToken.data.accessToken });
-      console.log('auth data ', auth.data);
-      setAccount(auth.data.numbers.ach[0]);
+      console.log('publicToken', publicToken);
+      try {
+        const accessTokenResponse = await axios.post('/api/exchange-public-token', JSON.stringify({ public_token: publicToken }));
+        const accessToken = accessTokenResponse.data.accessToken;
+        console.log('accessToken', accessToken);
+
+        const authResponse = await axios.post('/api/auth', JSON.stringify({ access_token: accessToken }));
+        const accountData = authResponse.data.plaidData.numbers.ach[0]; 
+        console.log('auth data ', accountData);
+
+        setAccount(accountData);
+      } catch (error) {
+        console.error('Error fetching account data:', error);
+        // Handle error, set account to null, show an error message, etc.
+      }
     }
-    fetchData();
-  }, []);
+
+    if(publicToken) {
+      fetchData();
+    }
+  }, [publicToken]);
 
   return account && (
     <>
