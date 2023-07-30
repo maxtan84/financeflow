@@ -10,7 +10,7 @@ import 'firebase/compat/firestore';
 import { usePlaidLink } from 'react-plaid-link';
 import axios from 'axios';
 
-export default function Dashboard({ hasFetched }) {
+export default function Dashboard() {
   const today = new Date();
   const currentYear = today.getFullYear();
   const lastYear = currentYear - 1;
