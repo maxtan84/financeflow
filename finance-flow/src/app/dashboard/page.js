@@ -290,7 +290,7 @@ export default function Dashboard() {
 const PlaidTransactions = ({ publicToken }) => {
   const [transactions, setTransactions] = useState();
   const customCategories = {
-    'Food & drink': 'Dining Out',
+    'Food and Drink': 'Dining Out',
     'Travel': 'Transportation',
     'Entertainment': 'Entertainment',
     'Retail': 'Shopping',
