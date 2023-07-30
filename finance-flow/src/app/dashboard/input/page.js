@@ -44,7 +44,7 @@ export default function Input() {
           
           <div className="flex-grow m-4 text-lg flex justify-center overflow-scroll">
             <FadeInView> 
-            <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 ">
+            <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-4">
               <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 font-bold mb-4">Name of Transaction:</label>
                 <input
@@ -83,7 +83,7 @@ export default function Input() {
                   <option value="">Select a category</option>
                   <option value="Dining Out">Dining Out</option>
                   <option value="Shopping">Shopping</option>
-                  <option value="Travel and Entertainment">Travel and Entertainment</option>
+                  <option value="Entertainment">Entertainment</option>
                   <option value="Home">Home</option>
                   <option value="Groceries">Groceries</option>
                   <option value="Transportation">Transportation</option>

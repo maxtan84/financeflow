@@ -67,7 +67,7 @@ export default function Budget() {
     <div className="flex flex-col h-screen">
       <DashHeader className="self-start" title="Set Monthly Budget" />
       
-      <div className="flex-grow p-8 overflow-auto">
+      <div className="flex-grow p-8 overflow-auto justify-center max-w-md mx-auto mt-4">
         <FadeInView> 
         <div className="mb-6">
           <label htmlFor="month" className="font-bold mb-1">
@@ -125,7 +125,7 @@ export default function Budget() {
         </div>
         <button
           onClick={handleBudgetSubmit}
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 float-right"
         >
           Submit Budget
         </button>

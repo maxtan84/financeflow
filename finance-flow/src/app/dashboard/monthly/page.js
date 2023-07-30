@@ -105,7 +105,7 @@ const Month = ({ month, monthNumber, year }) => {
       let othersTotal = 0;
         
       data.forEach((transaction) => {
-          if (transaction.category === 'Shopping' || transaction.category === 'Dining Out' || transaction.category === 'Travel and Entertainment') {
+          if (transaction.category === 'Shopping' || transaction.category === 'Dining Out' || transaction.category === 'Entertainment') {
               wantsTotal += parseInt(transaction.amount);
           }
       });

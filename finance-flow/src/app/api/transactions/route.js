@@ -23,9 +23,8 @@ export async function POST(req) {
         const plaidRequest = {
             access_token: access_token,
         };
-        const plaidResponse = await plaidClient.authGet(plaidRequest);
+        const plaidResponse = await plaidClient.transactionsSync(plaidRequest);
         const plaidData = plaidResponse.data;
-        console.log('Plaid auth data:', plaidData);
         return new Response(JSON.stringify({plaidData: plaidData}), {
             status: 200,
             headers: {

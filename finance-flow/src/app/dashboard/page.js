@@ -10,7 +10,7 @@ import 'firebase/compat/firestore';
 import { usePlaidLink } from 'react-plaid-link';
 import axios from 'axios';
 
-export default function Dashboard() {
+export default function Dashboard({ hasFetched }) {
   const today = new Date();
   const currentYear = today.getFullYear();
   const lastYear = currentYear - 1;
@@ -87,7 +87,7 @@ export default function Dashboard() {
       let monthlyOthersTotal = 0;
 
       data.forEach((transaction) => {
-          if (transaction.category === 'Shopping' || transaction.category === 'Dining Out' || transaction.category === 'Travel and Entertainment') {
+          if (transaction.category === 'Shopping' || transaction.category === 'Dining Out' || transaction.category === 'Entertainment') {
               wantsTotal += parseInt(transaction.amount);
               if(transaction.date >= monthStartDate && transaction.date <= endDate) {
                 monthlyTotal += parseInt(transaction.amount);
@@ -238,7 +238,7 @@ export default function Dashboard() {
       <div className="flex flex-col h-screen">
         <DashHeader className="self-start" title="DashBoard" />
 
-        {publicToken ? (<PlaidAuth publicToken={publicToken} />) : (
+        {publicToken ? (<PlaidTransactions publicToken={publicToken} />) : (
         <button onClick={() => open()} disabled={!ready}>
           Connect a bank account
         </button>
@@ -287,8 +287,21 @@ export default function Dashboard() {
   );
 }
 
-const PlaidAuth = ({ publicToken }) => {
-  const [account, setAccount] = useState();
+const PlaidTransactions = ({ publicToken }) => {
+  const [transactions, setTransactions] = useState();
+  const customCategories = {
+    'Food & drink': 'Dining Out',
+    'Travel': 'Transportation',
+    'Entertainment': 'Entertainment',
+    'Retail': 'Shopping',
+    'General Merchandise': 'Shopping',
+    'Home improvement': 'Home',
+    'Medical': 'Health and Education',
+  };
+
+  const categorizeTransaction = (plaidCategory) => {
+    return customCategories[plaidCategory] || 'Other';
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -298,14 +311,12 @@ const PlaidAuth = ({ publicToken }) => {
         const accessToken = accessTokenResponse.data.accessToken;
         console.log('accessToken', accessToken);
 
-        const authResponse = await axios.post('/api/auth', JSON.stringify({ access_token: accessToken }));
-        const accountData = authResponse.data.plaidData.numbers.ach[0]; 
-        console.log('auth data ', accountData);
-
-        setAccount(accountData);
+        const transactionsResponse = await axios.post('/api/transactions', JSON.stringify({ access_token: accessToken }));
+        setTransactions(transactionsResponse.data.plaidData.added);
+        console.log(transactionsResponse.data.plaidData.added);
+        console.log(transactions);
       } catch (error) {
         console.error('Error fetching account data:', error);
-        // Handle error, set account to null, show an error message, etc.
       }
     }
 
@@ -314,10 +325,27 @@ const PlaidAuth = ({ publicToken }) => {
     }
   }, [publicToken]);
 
-  return account && (
-    <>
-      <p>Account number: {account.account}</p>
-      <p>Routing number: {account.routing}</p>
-    </>
+  return transactions && (
+    <div className="overflow-scroll">
+      {transactions.length > 0 ? (
+        <ul className="flex flex-wrap m-2">
+          {transactions.map((transaction, index) => (
+            <li key={index} className="m-2">
+              <p>Transaction Name: {transaction.name}</p>
+              <p>Transactions ID: {transaction.transaction_id}</p>
+              <p>Date: {transaction.date}</p>
+              <p>Amount: {transaction.amount}</p>
+              <p>Categories: 
+                {transaction.category && transaction.category.map((category) => {
+                  return categorizeTransaction(category) + ', ';
+                })}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No transactions available.</p>
+      )}
+    </div>
   );
 }

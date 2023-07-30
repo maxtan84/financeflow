@@ -17,7 +17,7 @@ export default function MonthlyDetails({ searchParams }) {
   const [transactions, setTransactions] = useState([]);
   const [shopping, setShopping] = useState(0);
   const [diningOut, setDiningOut] = useState(0);
-  const [travelAndEntertainment, setTravelAndEntertainment] = useState(0);
+  const [entertainment, setEntertainment] = useState(0);
   const [home, setHome] = useState(0);
   const [groceries, setGroceries] = useState(0);
   const [transportation, setTransportation] = useState(0);
@@ -36,7 +36,7 @@ export default function MonthlyDetails({ searchParams }) {
   const categories = [
     'Shopping',
     'Dining Out',
-    'Travel and Entertainment',
+    'Entertainment',
     'Home',
     'Groceries',
     'Transportation',
@@ -72,9 +72,9 @@ export default function MonthlyDetails({ searchParams }) {
             const dining = data.filter((transaction) => transaction.category === 'Dining Out');
             const diningTotal = dining.reduce((total, transaction) => total + parseInt(transaction.amount), 0);
             setDiningOut(diningTotal);
-            const travel = data.filter((transaction) => transaction.category === 'Travel and Entertainment');
+            const travel = data.filter((transaction) => transaction.category === 'Entertainment');
             const travelTotal = travel.reduce((total, transaction) => total + parseInt(transaction.amount), 0);
-            setTravelAndEntertainment(travelTotal);
+            setEntertainment(travelTotal);
             const house = data.filter((transaction) => transaction.category === 'Home');
             const homeTotal = house.reduce((total, transaction) => total + parseInt(transaction.amount), 0);
             setHome(homeTotal);
@@ -130,11 +130,11 @@ export default function MonthlyDetails({ searchParams }) {
   const label = 'Spending in ' + month;
 
   const data = {
-    labels: ['Shopping', 'Dining Out', 'Travel and Entertainment', 'Home', 'Groceries', 'Transportation', 'Health and Education' ,'Other'],
+    labels: ['Shopping', 'Dining Out', 'Entertainment', 'Home', 'Groceries', 'Transportation', 'Health and Education' ,'Other'],
     datasets: [
       {
         label: label,
-        data: [shopping, diningOut, travelAndEntertainment, home, groceries, transportation, healthAndEducation, other],
+        data: [shopping, diningOut, entertainment, home, groceries, transportation, healthAndEducation, other],
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
