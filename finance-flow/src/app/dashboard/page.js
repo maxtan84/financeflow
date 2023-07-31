@@ -297,6 +297,8 @@ const PlaidTransactions = ({ publicToken }) => {
     'General Merchandise': 'Shopping',
     'Home improvement': 'Home',
     'Medical': 'Health and Education',
+    'Personal Care' : 'Health and Education',
+    'Rent and Utilities' : 'Utilities',
   };
 
   const categorizeTransaction = (plaidCategory) => {
@@ -326,7 +328,7 @@ const PlaidTransactions = ({ publicToken }) => {
   }, [publicToken]);
 
   return transactions && (
-    <div className="overflow-scroll">
+    <div className=" h-100%">
       {transactions.length > 0 ? (
         <ul className="flex flex-wrap m-2">
           {transactions.map((transaction, index) => (
@@ -337,7 +339,7 @@ const PlaidTransactions = ({ publicToken }) => {
               <p>Amount: {transaction.amount}</p>
               <p>Categories: 
                 {transaction.category && transaction.category.map((category) => {
-                  return categorizeTransaction(category) + ', ';
+                  return category + ', ';
                 })}
               </p>
             </li>

@@ -6,7 +6,7 @@ axios.defaults.baseURL = 'https://sandbox.plaid.com';
 
 export async function POST(req) {
     const configuration = new Configuration({
-        basePath: PlaidEnvironments.sandbox, // Replace with your desired environment (sandbox/development/production)
+        basePath: PlaidEnvironments.development, // Replace with your desired environment (sandbox/development/production)
         baseOptions: {
         headers: {
             'PLAID-CLIENT-ID': process.env.PLAID_CLIENT_ID,
@@ -25,6 +25,7 @@ export async function POST(req) {
         };
         const plaidResponse = await plaidClient.transactionsSync(plaidRequest);
         const plaidData = plaidResponse.data;
+        console.log('Plaid data:', plaidData);
         return new Response(JSON.stringify({plaidData: plaidData}), {
             status: 200,
             headers: {

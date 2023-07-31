@@ -6,7 +6,7 @@ axios.defaults.baseURL = 'https://sandbox.plaid.com'; // Use the appropriate Pla
 
 export async function POST(req) {
   const configuration = new Configuration({
-    basePath: PlaidEnvironments.sandbox, // Replace with your desired environment (sandbox/development/production)
+    basePath: PlaidEnvironments.development, // Replace with your desired environment (sandbox/development/production)
     baseOptions: {
       headers: {
         'PLAID-CLIENT-ID': process.env.PLAID_CLIENT_ID,
