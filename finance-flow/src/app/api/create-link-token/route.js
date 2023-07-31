@@ -13,7 +13,7 @@ export async function POST(req) {
         'PLAID-SECRET': process.env.PLAID_SECRET,
       },
     },
-  });
+  }); 
 
   const plaidClient = new PlaidApi(configuration);
 
