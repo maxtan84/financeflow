@@ -83,6 +83,13 @@ export default function Transactions() {
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Past Transactions" />
             <div className="flex-grow overflow-scroll">
+                {transactions.length === 0 && (
+                    <div className="flex flex-col items-center justify-center h-full">
+                        <p className="mb-2 text-lg font-bold">No transactions found</p>
+                        <p className="text-gray-500">Try adding some transactions</p>
+                    </div>
+                )}
+
                 {transactions.map((transactionData) => (
                     transactionData.transactions.length > 0 && <Transaction
                         key={`${transactionData.month.year}-${transactionData.month.number}`}

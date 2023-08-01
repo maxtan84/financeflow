@@ -288,6 +288,10 @@ export default function Dashboard() {
 }
 
 const PlaidTransactions = ({ publicToken }) => {
+  let userId = "test";
+  if (typeof window !== "undefined") {
+    userId = localStorage.getItem("userId");
+  }
   const [transactions, setTransactions] = useState();
   const customCategories = {
     'Food and Drink': 'Dining Out',
@@ -312,16 +316,34 @@ const PlaidTransactions = ({ publicToken }) => {
         const accessTokenResponse = await axios.post('/api/exchange-public-token', JSON.stringify({ public_token: publicToken }));
         const accessToken = accessTokenResponse.data.accessToken;
         console.log('accessToken', accessToken);
-
+  
         const transactionsResponse = await axios.post('/api/transactions', JSON.stringify({ access_token: accessToken }));
-        setTransactions(transactionsResponse.data.plaidData.added);
-        console.log(transactionsResponse.data.plaidData.added);
+        const transactions = transactionsResponse.data.plaidData.added;
         console.log(transactions);
+  
+        // Send the transactions data to your Firebase Firestore database
+        const db = firebase.firestore();
+  
+        transactions.forEach((transaction) => {
+          let categorizedTransaction = 'Other';
+          if(transaction.category != null) {
+            categorizedTransaction = categorizeTransaction(transaction.category[0]);
+          }
+          db.collection('transactions')
+            .add({ ...transaction, category: categorizedTransaction, userId: userId })
+            .then(() => {
+              console.log('Transaction added to Firebase!');
+            })
+            .catch((error) => {
+              console.error('Error adding transaction to Firebase:', error);
+            });
+        });
+        
       } catch (error) {
         console.error('Error fetching account data:', error);
       }
     }
-
+  
     if(publicToken) {
       fetchData();
     }
@@ -338,9 +360,9 @@ const PlaidTransactions = ({ publicToken }) => {
               <p>Date: {transaction.date}</p>
               <p>Amount: {transaction.amount}</p>
               <p>Categories: 
-                {transaction.category && transaction.category.map((category) => {
-                  return category + ', ';
-                })}
+                {transaction.category && 
+                  <li> {transaction.category[0]} </li>
+                }
               </p>
             </li>
           ))}

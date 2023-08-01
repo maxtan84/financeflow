@@ -6,7 +6,7 @@ axios.defaults.baseURL = 'https://sandbox.plaid.com'; // Use the appropriate Pla
 
 export async function POST(req) {
   const configuration = new Configuration({
-    basePath: PlaidEnvironments.development, // Replace with your desired environment (sandbox/development/production)
+    basePath: PlaidEnvironments.sandbox, // Replace with your desired environment (sandbox/development/production)
     baseOptions: {
       headers: {
         'PLAID-CLIENT-ID': process.env.PLAID_CLIENT_ID,
@@ -23,7 +23,7 @@ export async function POST(req) {
         client_user_id: 'user',
       },
       client_name: 'Plaid Test App',
-      products: ['transactions', 'auth'],
+      products: ['transactions'],
       language: 'en',
       redirect_uri: 'https://localhost:3000/', // Replace with your redirect URL
       country_codes: ['US', 'CA'], // Replace with your desired country codes
