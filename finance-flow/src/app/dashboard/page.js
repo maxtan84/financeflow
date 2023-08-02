@@ -31,9 +31,29 @@ export default function Dashboard() {
   const [monthlyOthers, setMonthlyOthers] = useState(0);
   const [monthData, setMonthData] = useState([]);
   const [mainDash, setMainDash] = useState(true);
-  
-  const numMonths = 12;
+  const [access_token, setAccessToken] = useState(null);
 
+  // This useEffect is for getting the access token from the database
+  useEffect(() => {
+    const db = firebase.firestore();
+    db.collection('accesstokens')
+      .where('userId', '==', userId)
+      .get()
+      .then((querySnapshot) => {
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setAccessToken(data[0].accessToken);
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      }
+    );
+  }, []);
+  
+  // This section of code gets the months so we can get transactions in each month
+  const numMonths = 12;
   const getMonths = () => {
     const months = [];
   
@@ -53,9 +73,11 @@ export default function Dashboard() {
     }
     return months;
   };
-
   const months = getMonths();
 
+
+  // This use effect is for getting transactions in the last year
+  // It sets the monthly and total spending for categories so that it can be used in the pie chart/line graph
   useEffect(() => {
     setTotalSpending(0);
     setTotalWants(0);
@@ -130,6 +152,7 @@ export default function Dashboard() {
       });
     };
 
+    // This function gets the transactions for a certain month from the database
     const getMonthlyTransactions = async (transactionMonth, transactionYear) => {
       const db = firebase.firestore();
       const startDate = `${transactionYear}-${transactionMonth.toString().padStart(2, '0')}-01`;
@@ -238,7 +261,7 @@ export default function Dashboard() {
       <div className="flex flex-col h-screen">
         <DashHeader className="self-start" title="DashBoard" />
 
-        {publicToken ? (<PlaidTransactions publicToken={publicToken} />) : (
+        {publicToken ? (<PlaidTransactions publicToken={publicToken} access_token={access_token} />) : (
         <button onClick={() => open()} disabled={!ready}>
           Connect a bank account
         </button>
@@ -287,7 +310,7 @@ export default function Dashboard() {
   );
 }
 
-const PlaidTransactions = ({ publicToken }) => {
+const PlaidTransactions = ({ publicToken, access_token}) => {
   let userId = "test";
   if (typeof window !== "undefined") {
     userId = localStorage.getItem("userId");
@@ -312,17 +335,25 @@ const PlaidTransactions = ({ publicToken }) => {
   useEffect(() => {
     async function fetchData() {
       console.log('publicToken', publicToken);
+
+      const db = firebase.firestore();
       try {
-        const accessTokenResponse = await axios.post('/api/exchange-public-token', JSON.stringify({ public_token: publicToken }));
-        const accessToken = accessTokenResponse.data.accessToken;
-        console.log('accessToken', accessToken);
-  
+        let accessToken = access_token;
+        if(!accessToken) {
+          const accessTokenResponse = await axios.post('/api/exchange-public-token', JSON.stringify({ public_token: publicToken }));
+          accessToken = accessTokenResponse.data.accessToken;
+          console.log('accessToken', accessToken);
+          db.collection('accesstokens')
+            .add({ accessToken: accessToken, userId: userId })
+            .then(() => {
+              console.log('Access Token added to Firebase!');
+            }
+          )
+        }
+        
         const transactionsResponse = await axios.post('/api/transactions', JSON.stringify({ access_token: accessToken }));
         const transactions = transactionsResponse.data.plaidData.added;
         console.log(transactions);
-  
-        // Send the transactions data to your Firebase Firestore database
-        const db = firebase.firestore();
   
         transactions.forEach((transaction) => {
           let categorizedTransaction = 'Other';
@@ -349,27 +380,5 @@ const PlaidTransactions = ({ publicToken }) => {
     }
   }, [publicToken]);
 
-  return transactions && (
-    <div className=" h-100%">
-      {transactions.length > 0 ? (
-        <ul className="flex flex-wrap m-2">
-          {transactions.map((transaction, index) => (
-            <li key={index} className="m-2">
-              <p>Transaction Name: {transaction.name}</p>
-              <p>Transactions ID: {transaction.transaction_id}</p>
-              <p>Date: {transaction.date}</p>
-              <p>Amount: {transaction.amount}</p>
-              <p>Categories: 
-                {transaction.category && 
-                  <li> {transaction.category[0]} </li>
-                }
-              </p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No transactions available.</p>
-      )}
-    </div>
-  );
+  return;
 }

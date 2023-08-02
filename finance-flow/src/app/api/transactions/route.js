@@ -20,7 +20,10 @@ export async function POST(req) {
         const access_token = data.access_token;
         const plaidRequest = {
             access_token: access_token,
-            count: 250,
+            count: 20,
+            options: {
+                include_personal_finance_category: true,
+            },
         };
         const plaidResponse = await plaidClient.transactionsSync(plaidRequest);
         const plaidData = plaidResponse.data;
