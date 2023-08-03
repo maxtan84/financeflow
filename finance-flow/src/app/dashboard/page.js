@@ -201,7 +201,7 @@ export default function Dashboard() {
   const pieData = {
     labels: ['Wants', 'Needs', 'Other', 'No expenses this month!'],
     values: [monthlyWants, monthlyNeeds, monthlyOthers, fill],
-    colors: ['#FF6384', '#36A2EB', '#FFCE56', '#808080'],
+    colors: [monthlyWants > 0 ? '#FF6384' : '#808080', monthlyNeeds > 0 ? '#36A2EB' : '#808080', monthlyOthers > 0 ? '#FFCE56' : '#808080', '#808080'],
   };
   
 
@@ -261,14 +261,17 @@ export default function Dashboard() {
       <div className="flex flex-col h-screen">
         <DashHeader className="self-start" title="DashBoard" />
 
-        {publicToken ? (<PlaidTransactions publicToken={publicToken} access_token={access_token} />) : (
-        <button onClick={() => open()} disabled={!ready}>
-          Connect a bank account
-        </button>
+        {publicToken ? (
+          <PlaidTransactions publicToken={publicToken} access_token={access_token} />
+        ) : (
+          <button onClick={() => open()} disabled={!ready}>
+            {access_token ? "Update your transactions" : "Connect a bank account"}
+          </button>
         )}
+
         { mainDash && 
           <button className="self-end m-2 p-2 bg-green-700 rounded text-white text-sm cursor-pointer" onClick={switchDash}>
-                View annual spending trends
+            View annual spending trends
           </button>
         }
         { !mainDash &&

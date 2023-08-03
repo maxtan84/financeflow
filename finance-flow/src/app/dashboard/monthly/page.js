@@ -141,7 +141,7 @@ const Month = ({ month, monthNumber, year }) => {
   const data = {
     labels: ['Wants', 'Needs', 'Other', 'No expenses this month!'],
     values: [wants, needs, other, fill],
-    colors: ['#FF6384', '#36A2EB', '#FFCE56', '#808080'],
+    colors: [wants > 0 ? '#FF6384' : '#808080', needs > 0 ? '#36A2EB' : '#808080', other > 0 ? '#FFCE56' : '#808080', '#808080'],
   };
 
   return (
