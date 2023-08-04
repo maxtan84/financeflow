@@ -12,6 +12,7 @@ export default function Transactions() {
         userId = localStorage.getItem("userId");
     }
     const [transactions, setTransactions] = useState([]);
+    const [numTransactions, setNumTransactions] = useState(0);
     const [months, setMonths] = useState([]);
     const [deleting, setDeleting] = useState(false);
     const today = new Date();
@@ -63,6 +64,7 @@ export default function Transactions() {
             });
             const results = await Promise.all(transactionPromises);
             const sortedResults = results.map((result) => {
+                setNumTransactions((prevNumTransactions) => prevNumTransactions + result.transactions.length);
                 const sortedTransactions = result.transactions.sort((a, b) => {
                   const dateA = new Date(a.date);
                   const dateB = new Date(b.date);
@@ -77,13 +79,14 @@ export default function Transactions() {
             fetchTransactions();
         }
     }, [months, userId, deleting]);
+    console.log(deleting)
+    console.log(numTransactions)
 
     return (
-        // transition slide items in from right
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Past Transactions" />
             <div className="flex-grow overflow-scroll">
-                {transactions.length === 0 && (
+                {numTransactions == 0 && (
                     <div className="flex flex-col items-center justify-center h-full">
                         <p className="mb-2 text-lg font-bold">No transactions found</p>
                         <p className="text-gray-500">Try adding some transactions</p>

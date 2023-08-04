@@ -10,6 +10,7 @@ import firebase from "firebase/compat/app"
 import 'firebase/compat/firestore'
 
 export default function Monthly() {
+    // following code gets the past 12 months and puts them in an array
     const today = new Date();
     const currentMonth = today.getMonth() + 1;
     const currentYear = today.getFullYear();
@@ -37,7 +38,8 @@ export default function Monthly() {
     const months = getMonths();
     const currentYearMonths = months.filter(month => month.year === currentYear);
     const lastYearMonths = months.filter(month => month.year === currentYear - 1);
-
+    
+    // displays past 12 months of transactions in individual pie charts
     return (
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Monthly Spendings" />
@@ -74,6 +76,8 @@ export default function Monthly() {
     )
 }
 
+// Month component gets transactions for the month and calculates the total for each category
+// Then it displays the pie chart with a link to the month's transactions
 const Month = ({ month, monthNumber, year }) => {
   let userId = "test";
   if (typeof window !== "undefined") {
