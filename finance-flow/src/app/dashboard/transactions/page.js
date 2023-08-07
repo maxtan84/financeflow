@@ -46,6 +46,7 @@ export default function Transactions() {
     }, [currentMonth, currentYear]);
 
     useEffect(() => {
+        setNumTransactions(0);
         const fetchTransactions = async () => {
             const db = firebase.firestore();
             const transactionPromises = months.map(async (month) => {
@@ -79,8 +80,6 @@ export default function Transactions() {
             fetchTransactions();
         }
     }, [months, userId, deleting]);
-    console.log(deleting)
-    console.log(numTransactions)
 
     return (
         <div className="flex flex-col h-screen">
