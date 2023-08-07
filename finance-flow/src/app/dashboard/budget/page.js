@@ -12,6 +12,7 @@ export default function Budget() {
   const [needsBudget, setNeedsBudget] = useState(0);
   const [othersBudget, setOthersBudget] = useState(0);
 
+  // Submit budget to database
   const handleBudgetSubmit = () => {
     if (!selectedMonth || !wantsBudget || !needsBudget) {
       console.log("Please fill in all fields");
@@ -47,6 +48,7 @@ export default function Budget() {
       });
   };
 
+  // Generate month options for select input
   const generateMonthOptions = () => {
     const today = new Date();
     const months = [];

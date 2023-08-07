@@ -1,7 +1,6 @@
 'use client'
 import DashFooter from "../../components/dash-footer";
 import DashHeader from "../../components/dash-header";
-import FadeInView from "../../components/FadeInView";
 import { useState, useEffect } from "react"
 import firebase from "firebase/compat/app"
 import 'firebase/compat/firestore'
@@ -20,6 +19,7 @@ export default function Transactions() {
     const currentYear = today.getFullYear();
     
 
+    // Get the months to display
     useEffect(() => {
         const getMonths = () => {
             const months = [];
@@ -45,6 +45,7 @@ export default function Transactions() {
         setMonths(getMonths());
     }, [currentMonth, currentYear]);
 
+    // Get the transactions for each month and stores them in an array
     useEffect(() => {
         setNumTransactions(0);
         const fetchTransactions = async () => {
@@ -108,6 +109,7 @@ export default function Transactions() {
     );
 }
 
+// Displays the transactions for a given month
 const Transaction = ({ month, year, transactions, deleting, setDeleting }) => {
     const handleDelete = async (transactionId) => {
         try {

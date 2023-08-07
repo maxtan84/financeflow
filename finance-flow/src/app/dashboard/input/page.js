@@ -18,6 +18,7 @@ export default function Input() {
         date: "",
     })
 
+    // Add transaction to Firebase
     const handleSubmit = (e) => {
         e.preventDefault();
       

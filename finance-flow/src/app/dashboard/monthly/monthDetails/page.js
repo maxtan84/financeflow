@@ -13,6 +13,7 @@ export default function MonthlyDetails({ searchParams }) {
   if (typeof window !== "undefined") {
       userId = localStorage.getItem("userId");
   }
+  // setting categories for bar graph
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [shopping, setShopping] = useState(0);
@@ -25,6 +26,7 @@ export default function MonthlyDetails({ searchParams }) {
   const [utilities, setUtilities] = useState(0);
   const [other, setOther] = useState(0);
 
+  // setting budgets
   const [budgetExists, setBudgetExists] = useState(false);
   const [wBudget, setWantsBudget] = useState(0);
   const [nBudget, setNeedsBudget] = useState(0);
@@ -49,6 +51,7 @@ export default function MonthlyDetails({ searchParams }) {
   const monthNumber = searchParams.monthNumber;
   const year = searchParams.year;
 
+  // This useeffect gets the transactions for the month, calculates the total for each category, and checks for budgets
   useEffect(() => {
     if (month) {
       const getTransactions = () => {
@@ -129,6 +132,7 @@ export default function MonthlyDetails({ searchParams }) {
 
   const label = 'Spending in ' + month;
 
+  // data for bar graph
   const data = {
     labels: ['Shopping', 'Dining Out', 'Entertainment', 'Home', 'Groceries', 'Transportation', 'Health and Education' ,'Other'],
     datasets: [
@@ -142,6 +146,7 @@ export default function MonthlyDetails({ searchParams }) {
     ],
   };
 
+  // budget logic
   const overWants = totalWants - wBudget > 0 ? true : false;
   const overNeeds = totalNeeds - nBudget > 0 ? true : false;
   const overOthers = totalOthers - oBudget > 0 ? true : false;
@@ -203,6 +208,7 @@ export default function MonthlyDetails({ searchParams }) {
   );
 }
 
+// buttons for selecting independent categories
 const Button = ({ text, onClick, isSelected }) => (
   <button
     className={`bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-1 px-2 rounded m-2`}
