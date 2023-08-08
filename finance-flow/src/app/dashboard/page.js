@@ -260,25 +260,26 @@ export default function Dashboard() {
     <FadeInView>
       <div className="flex flex-col h-screen">
         <DashHeader className="self-start" title="DashBoard" />
+        <div className="m-2">
+          {publicToken ? (
+            <PlaidTransactions publicToken={publicToken} access_token={access_token} />
+          ) : (
+            <button onClick={() => open()} disabled={!ready} className="m-1 p-2 bg-green-700 rounded text-white text-sm cursor-pointer hover:bg-green-500 ease-in-out transition duration-100">
+              {access_token ? "Update your transactions" : "Connect a bank account"}
+            </button>
+          )}
 
-        {publicToken ? (
-          <PlaidTransactions publicToken={publicToken} access_token={access_token} />
-        ) : (
-          <button onClick={() => open()} disabled={!ready}>
-            {access_token ? "Update your transactions" : "Connect a bank account"}
-          </button>
-        )}
-
-        { mainDash && 
-          <button className="self-end m-2 p-2 bg-green-700 rounded text-white text-sm cursor-pointer" onClick={switchDash}>
-            View annual spending trends
-          </button>
-        }
-        { !mainDash &&
-          <button className="self-end m-2 p-2 bg-green-700 rounded text-white text-sm cursor-pointer" onClick={switchDash}>
-            Back to main
-          </button>
-        }
+          { mainDash && 
+            <button className="m-1 p-2 bg-green-700 rounded text-white text-sm cursor-pointer hover:bg-green-500 ease-in-out transition duration-100" onClick={switchDash}>
+              View annual spending trends
+            </button>
+          }
+          { !mainDash &&
+            <button className="m-1 p-2 bg-green-700 rounded text-white text-sm cursor-pointer hover:bg-green-500 ease-in-out transition duration-100" onClick={switchDash}>
+              Back to main
+            </button>
+          }
+         </div>
         
         {!mainDash && 
           <div className="flex-grow flex flex-col justify-center items-center text-center">
