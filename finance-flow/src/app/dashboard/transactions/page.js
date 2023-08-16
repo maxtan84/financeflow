@@ -123,18 +123,20 @@ const Transaction = ({ month, year, transactions, deleting, setDeleting }) => {
 
     return (
         <div className="overflow-x-hidden">
-            <h2 className="mb-1 text-lg font-bold bg-gray-300">{month} {year}</h2>
+            <h2 className="mb-1 pl-2 text-lg font-bold bg-gray-300">{month} {year}</h2>
             {transactions.map((transaction) => (
-                <div key={transaction.id} className="flex">
+                <div key={transaction.id} className="flex align-center">
                     <p className="m-1 w-[40%]" >{transaction.name}</p>
-                    <p className="m-1 w-[20%]" >${transaction.amount}</p>
-                    <p className="m-1 w-[30%]" >{transaction.date}</p>
-                    <button
-                        className="m-1 bg-gray-500 hover:bg-red-700 text-white px-1 rounded"
-                        onClick={() => handleDelete(transaction.id)}
-                    >
-                        X
-                    </button>
+                    <p className="m-1 w-[20%] flex items-center justify-center" >${transaction.amount}</p>
+                    <div className="w-[35%] flex align-top justify-end">
+                        <p className="m-1 mr-3 self-center " >{transaction.date}</p>
+                        <button
+                            className="m-1 bg-gray-500 hover:bg-red-700 text-white px-1 rounded self-center"
+                            onClick={() => handleDelete(transaction.id)}
+                        >
+                            X
+                        </button>
+                    </div>
                 </div>
             ))}
         </div>
