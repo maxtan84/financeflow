@@ -43,7 +43,7 @@ export default function Monthly() {
     return (
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Monthly Spendings" />
-            <div className="overflow-scroll">
+            <div className="overflow-x-hidden">
               <FadeInView>  
                 <div className="flex-grow flex flex-wrap w-full justify-center">
                     <h2 className="relative pl-3 py-2 font-bold self-start bg-gray-300 w-full h-auto">{currentYear}</h2>

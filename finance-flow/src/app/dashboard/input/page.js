@@ -43,7 +43,7 @@ export default function Input() {
         <div className="flex flex-col h-screen">
           <DashHeader className="self-start" title="Input New Expense" />
           
-          <div className="flex-grow m-4 text-lg flex justify-center overflow-scroll">
+          <div className="flex-grow m-4 text-lg flex justify-center overflow-x-hidden">
             <FadeInView> 
             <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-4">
               <div className="mb-4">

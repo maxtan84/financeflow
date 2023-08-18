@@ -85,13 +85,15 @@ export default function Transactions() {
     return (
         <div className="flex flex-col h-screen">
             <DashHeader className="self-start" title="Past Transactions" />
-            <div className="flex-grow overflow-scroll">
+            <div className="flex-grow overflow-x-hidden">
                 {numTransactions == 0 && (
                     <div className="flex flex-col items-center justify-center h-full">
                         <p className="mb-2 text-lg font-bold">No transactions found</p>
                         <p className="text-gray-500">Try adding some transactions</p>
                     </div>
                 )}
+
+                
 
                 {transactions.map((transactionData) => (
                     transactionData.transactions.length > 0 && <Transaction
@@ -124,6 +126,11 @@ const Transaction = ({ month, year, transactions, deleting, setDeleting }) => {
     return (
         <div className="overflow-x-hidden">
             <h2 className="mb-1 pl-2 text-lg font-bold bg-gray-300">{month} {year}</h2>
+            <div className="flex">
+                <p className="mx-1 w-[40%] underline">Name</p>
+                <p className="w-[20%] flex items-center justify-center underline">Amount</p>
+                <p className="w-[35%] text-right underline">Date</p>
+            </div>
             {transactions.map((transaction) => (
                 <div key={transaction.id} className="flex align-center">
                     <p className="m-1 w-[40%]" >{transaction.name}</p>
